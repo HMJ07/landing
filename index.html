@@ -2387,19 +2387,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   </div>
 </div>
 <script>
-(function(){
-  if(!localStorage.getItem('cookie_consent')){
-    document.getElementById('cookie-banner').style.display='block';
-  }
-})();
 function cookieChoice(type){
   localStorage.setItem('cookie_consent', type);
   localStorage.setItem('cookie_consent_date', new Date().toISOString());
-  document.getElementById('cookie-banner').style.display='none';
-  if(type==='all'){
-    // Aquí puedes activar Google Analytics u otras herramientas de análisis
-  }
+  var banner = document.getElementById('cookie-banner');
+  banner.style.transition = 'opacity .3s';
+  banner.style.opacity = '0';
+  setTimeout(function(){ banner.style.display='none'; }, 300);
 }
+window.addEventListener('DOMContentLoaded', function(){
+  if(!localStorage.getItem('cookie_consent')){
+    setTimeout(function(){
+      var banner = document.getElementById('cookie-banner');
+      banner.style.display = 'block';
+      banner.style.opacity = '0';
+      banner.style.transition = 'opacity .4s';
+      setTimeout(function(){ banner.style.opacity = '1'; }, 50);
+    }, 1500);
+  }
+});
 </script>
 
 <!-- ════════════════════════════════════════════════════════════
