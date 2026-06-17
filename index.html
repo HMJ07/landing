@@ -1282,8 +1282,9 @@
       emoji: '✈️',
       desc: 'Tu negocio disponible en Telegram. Los usuarios pueden hacer consultas, recibir notificaciones y completar flujos directamente desde la app que ya usan.',
       features: ['Comandos personalizados','Notificaciones push','Flujos conversacionales','0 instalaciones para el usuario'],
+      cta: {text:'Abrir en Telegram', url:'https://t.me/HugoArribasBot'},
       headerBg: '#229ED9',
-      headerText: '@HugoAssistantBot',
+      headerText: '@HugoArribasBot',
       bubbleStyle: function(role){ return role==='user' ? 'background:#229ED9;color:#fff;align-self:flex-end;' : 'background:rgba(255,255,255,.07);color:var(--text);'; },
       messages: [
         {role:'bot', text:'👋 Bienvenido al bot de Hugo Arribas. Escribe /ayuda para ver lo que puedo hacer.'},
@@ -1342,6 +1343,7 @@
         '<ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">' +
           pl.features.map(function(f){ return '<li style="display:flex;align-items:center;gap:10px;color:var(--text);font-size:.9rem;"><span style="color:'+pl.color+';">✓</span>'+f+'</li>'; }).join('') +
         '</ul>' +
+        (pl.cta ? '<a href="'+pl.cta.url+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:12px 28px;background:'+pl.color+';color:#fff;border-radius:50px;font-weight:700;font-size:.9rem;text-decoration:none;transition:var(--transition);" onmouseover="this.style.transform=\'translateY(-2px)\';this.style.opacity=\'.9\'" onmouseout="this.style.transform=\'\';this.style.opacity=\'1\'">✈️ '+pl.cta.text+'</a>' : '') +
       '</div>';
   }
 
