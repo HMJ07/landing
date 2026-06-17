@@ -1119,7 +1119,7 @@
           <span class="tag">Make</span>
           <span class="tag">LangChain</span>
         </div>
-        <div class="service-price">Desde <strong>€299</strong> / proyecto</div>
+        <div class="service-price">Desde <strong>€159</strong> / proyecto</div>
       </div>
 
       <div class="service-card reveal d2">
@@ -1135,7 +1135,7 @@
           <span class="tag">Supabase</span>
           <span class="tag">Stripe</span>
         </div>
-        <div class="service-price">Desde <strong>€499</strong> / proyecto</div>
+        <div class="service-price">Desde <strong>€399</strong> / proyecto</div>
       </div>
 
       <div class="service-card reveal d3">
@@ -1169,7 +1169,21 @@
         </div>
         <div class="service-price">Desde <strong>€199</strong> / proyecto</div>
       </div>
-
+      
+      <div class="service-card reveal d5">
+        <div class="service-icon">🧑‍💻</div>
+        <div class="service-name">Landing page</div>
+        <p class="service-desc">
+          Creo una web personalizada para tu negocio. Incluirá todo tipo de tecnología, capaz de modernizar tu negocio.
+        </p>
+        <div class="service-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Formspree</span>
+        </div>
+        <div class="service-price">Desde <strong>€99</strong> / proyecto</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1797,36 +1811,26 @@ form.addEventListener('submit', async (e) => {
   btn.textContent = 'Enviando...';
   btn.disabled = true;
 
-  // ── AQUÍ conectarás tu backend o Formspree ──────────────────
-  // Opción A (Formspree — recomendado para empezar):
-  //   1. Ve a formspree.io, crea cuenta gratis
-  //   2. Copia tu endpoint (ej: https://formspree.io/f/XXXXXX)
-  //   3. Cambia la URL de abajo
-  //
-  // try {
-  //   const res = await fetch('https://formspree.io/f/TU_ID', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-  //     body: JSON.stringify({
-  //       name: name.value, email: email.value,
-  //       budget: document.getElementById('f-budget').value,
-  //       message: message.value
-  //     })
-  //   });
-  //   if (!res.ok) throw new Error();
-  //   document.getElementById('form-success').classList.add('show');
-  //   form.reset();
-  //   document.querySelectorAll('.budget-opt').forEach(o => o.classList.remove('selected'));
-  // } catch {
-  //   btn.textContent = 'Error. Inténtalo de nuevo.';
-  // } finally { btn.disabled = false; }
 
-  // ── DEMO SIN BACKEND (quita esto cuando conectes Formspree) ─
-  await new Promise(r => setTimeout(r, 1200));
-  document.getElementById('form-success').classList.add('show');
-  form.reset();
-  document.querySelectorAll('.budget-opt').forEach(o => o.classList.remove('selected'));
-  btn.textContent = 'Enviado ✓';
+   try {
+     const res = await fetch('https://formspree.io/f/TU_ID', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+       body: JSON.stringify({
+         name: name.value, email: email.value,
+         budget: document.getElementById('f-budget').value,
+         message: message.value
+       })
+     });
+     if (!res.ok) throw new Error();
+     document.getElementById('form-success').classList.add('show');
+     form.reset();
+     document.querySelectorAll('.budget-opt').forEach(o => o.classList.remove('selected'));
+   } catch {
+     btn.textContent = 'Error. Inténtalo de nuevo.';
+   } finally { btn.disabled = false; }
+
+ 
   // ────────────────────────────────────────────────────────────
 });
 
