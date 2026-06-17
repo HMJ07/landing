@@ -1962,6 +1962,78 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════════
+     FAQ
+═════════════════════════════════════════════════════════════ -->
+<section id="faq" style="padding:var(--section-gap) 0;border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:56px;">
+      <p class="section-label">Preguntas frecuentes</p>
+      <h2 class="section-title">Todo lo que necesitas <span class="gradient-text">saber</span></h2>
+      <p class="section-sub">Respuestas directas antes de que tengas que preguntar.</p>
+    </div>
+    <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px;" id="faq-list">
+
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tarda en hacer mi proyecto? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Depende del proyecto. Una landing page: 3–5 días. Un bot con IA: 1 semana. Una web completa con base de datos: 2–3 semanas. Siempre con demos intermedias para que veas el progreso real.</div>
+      </div>
+
+      <div class="faq-item reveal d1">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Por transferencia bancaria, Bizum o PayPal. Siempre <strong>50% por adelantado</strong> y 50% al entregar. Para servicios mensuales (mantenimiento de bot, hosting, etc.) se puede domiciliar con tarjeta vía Stripe.</div>
+      </div>
+
+      <div class="faq-item reveal d2">
+        <button class="faq-q" onclick="toggleFaq(this)">¿El bot funciona en mi web aunque no sé programar? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Sí. Solo tienes que pegar una línea de código en tu web — te digo exactamente cuál y dónde. Si no tienes acceso al código de tu web, lo hago yo por ti sin coste adicional.</div>
+      </div>
+
+      <div class="faq-item reveal d3">
+        <button class="faq-q" onclick="toggleFaq(this)">¿El bot usa ChatGPT? ¿Tengo que pagar OpenAI? <span class="faq-icon">+</span></button>
+        <div class="faq-a">No. Uso una IA propia (Groq/Llama) que no requiere suscripción a OpenAI. El bot corre en mi servidor — tú no pagas nada extra por la IA, está incluido en el precio.</div>
+      </div>
+
+      <div class="faq-item reveal d4">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si no me gusta el resultado? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Trabajo con revisiones incluidas y demos antes de la entrega final. Si algo no está como lo querías, se corrige sin coste adicional. El objetivo es que estés 100% satisfecho antes de cerrar el proyecto.</div>
+      </div>
+
+      <div class="faq-item reveal d5">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Necesito ser autónomo o tener empresa para contratarte? <span class="faq-icon">+</span></button>
+        <div class="faq-a">No. Trabajo con particulares, autónomos y empresas. Si necesitas factura, la emito sin problema. Si eres particular, acordamos el pago de forma directa.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Puedo tener el bot en Telegram, WhatsApp y mi web a la vez? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Sí, el mismo asistente puede estar en todas las plataformas simultáneamente con el mismo contexto y personalidad. Se presupuesta según las plataformas que necesites.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.faq-item { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s; }
+.faq-item:hover { border-color:var(--border-hover); }
+.faq-q { width:100%;background:none;border:none;padding:20px 24px;text-align:left;font-size:.95rem;font-weight:700;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px; }
+.faq-icon { font-size:1.4rem;color:var(--accent);font-weight:400;flex-shrink:0;transition:transform .3s; }
+.faq-a { max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;padding:0 24px;font-size:.9rem;color:var(--text-muted);line-height:1.7; }
+.faq-a.open { max-height:200px;padding:0 24px 20px; }
+.faq-icon.open { transform:rotate(45deg); }
+</style>
+
+<script>
+function toggleFaq(btn){
+  var icon = btn.querySelector('.faq-icon');
+  var ans  = btn.nextElementSibling;
+  var open = ans.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(function(a){ a.classList.remove('open'); });
+  document.querySelectorAll('.faq-icon').forEach(function(i){ i.classList.remove('open'); });
+  if(!open){ ans.classList.add('open'); icon.classList.add('open'); }
+}
+</script>
+
+<!-- ════════════════════════════════════════════════════════════
      FOOTER
 ═════════════════════════════════════════════════════════════ -->
 <footer>
@@ -2300,6 +2372,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 </script>
 
 <!-- ════════════════════════════════════════════════════════════
+     COOKIES BANNER
+═════════════════════════════════════════════════════════════ -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#111118;border-top:1px solid rgba(108,99,255,.3);padding:20px 24px;box-shadow:0 -8px 32px rgba(0,0,0,.4);">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:260px;">
+      <div style="font-weight:700;font-size:.95rem;color:#f0f0ff;margin-bottom:6px;">🍪 Usamos cookies</div>
+      <p style="font-size:.82rem;color:#8888aa;margin:0;line-height:1.6;">Usamos cookies propias y de análisis para mejorar tu experiencia. Puedes aceptarlas todas o solo las esenciales. <a href="privacidad.html" style="color:#6c63ff;text-decoration:underline;">Política de privacidad</a></p>
+    </div>
+    <div style="display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap;">
+      <button onclick="cookieChoice('essential')" style="padding:9px 20px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:transparent;color:#8888aa;font-size:.82rem;font-weight:600;cursor:pointer;">Solo esenciales</button>
+      <button onclick="cookieChoice('all')" style="padding:9px 20px;border-radius:8px;border:none;background:#6c63ff;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;">Aceptar todas</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('cookie_consent')){
+    document.getElementById('cookie-banner').style.display='block';
+  }
+})();
+function cookieChoice(type){
+  localStorage.setItem('cookie_consent', type);
+  localStorage.setItem('cookie_consent_date', new Date().toISOString());
+  document.getElementById('cookie-banner').style.display='none';
+  if(type==='all'){
+    // Aquí puedes activar Google Analytics u otras herramientas de análisis
+  }
+}
+</script>
+
+<!-- ════════════════════════════════════════════════════════════
      CHATBOT WIDGET — Hugo Assistant
      Configuración: cambia BACKEND_URL por tu dominio en producción
      Para desarrollo local: uvicorn backend.main:app (puerto 8000)
@@ -2337,23 +2440,51 @@ SERVICIOS Y PRECIOS:
 • Landing Pages — desde €99 (HTML, CSS, Node.js)
 
 PROYECTOS DESTACADOS:
-- Joyería Plata&Co (e-commerce)
-- Blog de salud y estilo de vida
-- Web de restaurante con reservas
-- App de gestión de inmuebles
+- Joyería Plata&Co (e-commerce): https://plataco.netlify.app/
+- Blog de salud y estilo de vida: https://blogsano.netlify.app/
+- Web de restaurante con reservas: https://materarest.netlify.app/
+- App de gestión de inmuebles: https://inmogestapp.netlify.app/
+- Bot con IA (Telegram): https://t.me/HugoArribasBot
+
+PREGUNTAS FRECUENTES (FAQ):
+P: ¿Cuánto tarda en hacer mi proyecto?
+R: Depende del proyecto. Una landing page: 3-5 días. Un bot con IA: 1 semana. Una web completa con base de datos: 2-3 semanas. Siempre con demos intermedias.
+
+P: ¿Cómo se paga?
+R: Por transferencia bancaria, Bizum o PayPal. Siempre 50% por adelantado y 50% al entregar. Para servicios mensuales (mantenimiento de bot, etc.) se puede pagar con tarjeta vía Stripe.
+
+P: ¿Necesito ser autónomo o tener empresa para contratarte?
+R: No. Puedes ser un particular, autónomo o empresa. Hugo trabaja con todo tipo de clientes.
+
+P: ¿Qué pasa si no me gusta el resultado?
+R: Hugo trabaja con revisiones incluidas. Se hacen demos antes de la entrega final para asegurarse de que todo está como lo quieres. Si algo no está bien, se corrige sin coste adicional.
+
+P: ¿El bot funciona en mi web aunque no sé programar?
+R: Sí. Solo tienes que pegar una línea de código en tu web (Hugo te dice cuál). Si no tienes acceso al código, Hugo lo hace por ti.
+
+P: ¿El bot usa ChatGPT? ¿Tengo que pagar OpenAI?
+R: No. Hugo usa una IA gratuita (Groq/Llama) que no requiere suscripción. El bot corre en el servidor de Hugo — tú no pagas nada extra por la IA.
+
+P: ¿Puedo tener el bot en Telegram, WhatsApp y mi web a la vez?
+R: Sí, el mismo asistente puede estar en todas las plataformas simultáneamente. Se presupuesta según las plataformas que necesites.
+
+P: ¿Qué necesito para empezar?
+R: Solo contactar a Hugo con tu idea. Te responde en menos de 2 horas (L-V) con una propuesta concreta y sin compromiso.
 
 CONTACTO:
 • Email: hugoarribasmunoz2019@gmail.com
 • LinkedIn: linkedin.com/in/hugo-arribas-muñoz/
 • GitHub: github.com/HMJ07
 • Web: https://hugoam-dev.netlify.app/
+• Telegram bot: https://t.me/HugoArribasBot
 
 INSTRUCCIONES:
 - Responde siempre en el idioma del usuario (español o inglés).
 - Sé directo, amable y profesional. Máximo 3 párrafos por respuesta.
 - Para presupuesto exacto, siempre dirige al email o al formulario de contacto.
 - Si preguntan por disponibilidad, di que está disponible ahora mismo.
-- No inventes plazos de entrega ni garantías específicas que no estén aquí.`;
+- No inventes plazos de entrega ni garantías específicas que no estén aquí.
+- Si alguien pregunta sobre pagos, métodos de pago, precios o facturación, usa la información del FAQ.`;
 
   const history = [];
   const sessionId = 'hg_' + Math.random().toString(36).slice(2);
