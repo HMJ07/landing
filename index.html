@@ -1,0 +1,2468 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Hugo Arribas — Desarrollador Full Stack & AI Automation. Soluciones digitales rápidas, seguras y escalables." />
+  <meta name="keywords" content="desarrollador freelance, automatización IA, web development, Next.js, Python, España" />
+  <meta property="og:title" content="Hugo Arribas — Dev & AI Automation" />
+  <meta property="og:description" content="Construyo productos digitales que generan resultados reales." />
+  <meta property="og:type" content="website" />
+  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+  <title>Hugo Arribas — Dev & AI Automation</title>
+  <style>
+    /* ────────────────────────────────────────────────────────────
+       VARIABLES — TEMA OSCURO (por defecto)
+    ──────────────────────────────────────────────────────────── */
+    :root {
+      /* Colores principales */
+      --accent:        #6c63ff;       
+      --accent-2:      #ff6584;       
+      --accent-glow:   rgba(108,99,255,.35);
+
+      /* Fondos */
+      --bg:            #0a0a0f;
+      --bg-card:       #111118;
+      --bg-glass:      rgba(255,255,255,.04);
+      --bg-input:      rgba(255,255,255,.06);
+
+      /* Texto */
+      --text:          #f0f0ff;
+      --text-muted:    #8888aa;
+      --text-subtle:   #555577;
+
+      /* Bordes */
+      --border:        rgba(255,255,255,.08);
+      --border-hover:  rgba(108,99,255,.5);
+
+      /* Tipografía */
+      --font-body:     'Inter', system-ui, sans-serif;
+      --font-mono:     'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Espaciados */
+      --radius:        12px;
+      --radius-lg:     20px;
+      --section-gap:   120px;
+      --transition:    .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       VARIABLES — TEMA CLARO
+    ──────────────────────────────────────────────────────────── */
+    [data-theme="light"] {
+      --bg:            #f8f8ff;
+      --bg-card:       #ffffff;
+      --bg-glass:      rgba(0,0,0,.03);
+      --bg-input:      rgba(0,0,0,.04);
+      --text:          #111122;
+      --text-muted:    #555577;
+      --text-subtle:   #aaaacc;
+      --border:        rgba(0,0,0,.08);
+      --border-hover:  rgba(108,99,255,.4);
+      --accent-glow:   rgba(108,99,255,.2);
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       RESET & BASE
+    ──────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    input, textarea, select {
+      font-family: inherit;
+      font-size: inherit;
+      border: none;
+      outline: none;
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       SCROLLBAR
+    ──────────────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+    /* ────────────────────────────────────────────────────────────
+       CURSOR PERSONALIZADO
+    ──────────────────────────────────────────────────────────── */
+    .cursor-dot, .cursor-ring {
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: opacity .3s;
+    }
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      opacity: .5;
+      transition: width .2s, height .2s, opacity .2s, transform .08s;
+    }
+    .cursor-ring.hover { width: 54px; height: 54px; opacity: .8; }
+    @media (pointer: coarse) { .cursor-dot, .cursor-ring { display:none; } }
+
+    /* ────────────────────────────────────────────────────────────
+       CANVAS PARTÍCULAS (fondo animado)
+    ──────────────────────────────────────────────────────────── */
+    #particles-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      opacity: .4;
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       LAYOUT HELPERS
+    ──────────────────────────────────────────────────────────── */
+    .container {
+      width: min(1140px, 92vw);
+      margin: 0 auto;
+    }
+    section { position: relative; z-index: 1; }
+    .section-label {
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--text-muted);
+      max-width: 560px;
+    }
+    .highlight { color: var(--accent); }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       BOTONES
+    ──────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 99px;
+      font-weight: 700; font-size: .95rem;
+      cursor: pointer; transition: var(--transition);
+      position: relative; overflow: hidden;
+      border: none;
+    }
+    .btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: white; opacity: 0;
+      transition: opacity .2s;
+    }
+    .btn:hover::after { opacity: .08; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px var(--accent-glow);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       NAV
+    ──────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 0;
+      transition: background .4s, box-shadow .4s, padding .3s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,15,.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--border);
+      padding: 12px 0;
+    }
+    [data-theme="light"] nav.scrolled {
+      background: rgba(248,248,255,.85);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.2rem; font-weight: 800;
+      font-family: var(--font-mono);
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 32px; align-items: center;
+    }
+    .nav-links a {
+      font-size: .9rem; font-weight: 600; color: var(--text-muted);
+      transition: color var(--transition); position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 2px; background: var(--accent);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform .3s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    /* Theme toggle */
+    .theme-toggle {
+      width: 44px; height: 24px;
+      background: var(--bg-glass);
+      border: 2px solid var(--border);
+      border-radius: 99px; cursor: pointer;
+      position: relative; transition: var(--transition);
+    }
+    .theme-toggle::after {
+      content: ''; position: absolute;
+      top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      background: var(--accent); border-radius: 50%;
+      transition: transform .3s;
+    }
+    [data-theme="light"] .theme-toggle::after { transform: translateX(20px); }
+
+    /* Burger */
+    .burger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px;
+    }
+    .burger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: var(--transition);
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav */
+    .mobile-menu {
+      display: none; position: fixed;
+      top: 70px; left: 0; right: 0;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0; z-index: 99;
+      flex-direction: column; gap: 8px; align-items: center;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--text-muted); padding: 8px 0;
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .burger { display: flex; }
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       HERO
+    ──────────────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 0 80px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 6px 16px; font-size: .82rem;
+      font-weight: 600; color: var(--accent);
+      margin-bottom: 28px;
+    }
+    .hero-badge::before {
+      content: ''; width: 8px; height: 8px;
+      background: #22c55e; border-radius: 50%;
+      animation: pulse-green 2s infinite;
+    }
+    @keyframes pulse-green {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+      50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 900; line-height: 1.08;
+      margin-bottom: 20px;
+    }
+    .typed-wrapper {
+      display: inline-block;
+      min-width: 1ch;
+    }
+    #typed-text {
+      color: var(--accent);
+    }
+    .cursor-blink {
+      display: inline-block;
+      width: 3px; height: 1em;
+      background: var(--accent);
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .hero-desc {
+      font-size: 1.1rem; color: var(--text-muted);
+      margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 48px;
+      padding-top: 32px; border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-size: 2rem; font-weight: 900;
+      font-family: var(--font-mono);
+    }
+    .stat-label { font-size: .8rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* Orb flotante */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+    .orb {
+      width: min(420px, 90vw); height: min(420px, 90vw);
+      border-radius: 50%; position: relative;
+      background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent));
+      animation: spin-slow 8s linear infinite;
+      box-shadow: 0 0 80px var(--accent-glow);
+    }
+    .orb::before {
+      content: ''; position: absolute; inset: 6px;
+      background: var(--bg); border-radius: 50%;
+    }
+    .orb-inner {
+      position: absolute; inset: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, var(--accent-glow), transparent 60%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: .8rem;
+      color: var(--text-muted); text-align: center;
+      padding: 32px;
+    }
+    .orb-code {
+      font-size: .72rem; line-height: 1.7;
+      opacity: .8; word-break: break-all;
+    }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+
+    /* Floating cards alrededor del orb */
+    .float-card {
+      position: absolute;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      font-size: .78rem; font-weight: 600;
+      display: flex; align-items: center; gap: 8px;
+      backdrop-filter: blur(8px);
+      animation: float-ud 3s ease-in-out infinite;
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    }
+    .float-card:nth-child(2) { animation-delay: -.8s; }
+    .float-card:nth-child(3) { animation-delay: -1.6s; }
+    .float-card:nth-child(4) { animation-delay: -2.4s; }
+    .fc-1 { top: 8%; right: 2%; }
+    .fc-2 { bottom: 14%; left: -4%; }
+    .fc-3 { top: 42%; left: -8%; }
+    .fc-4 { bottom: 5%; right: 6%; }
+    .fc-icon { font-size: 1.1rem; }
+    @keyframes float-ud {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       TECH STACK TICKER
+    ──────────────────────────────────────────────────────────── */
+    .ticker-section {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden; position: relative; z-index: 1;
+    }
+    .ticker-track {
+      display: flex; gap: 48px;
+      animation: ticker 20s linear infinite;
+      width: max-content;
+    }
+    .ticker-section:hover .ticker-track { animation-play-state: paused; }
+    .ticker-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .9rem; font-weight: 700;
+      color: var(--text-muted); white-space: nowrap;
+      transition: color .2s;
+    }
+    .ticker-item:hover { color: var(--accent); }
+    .ticker-item .ti { font-size: 1.3rem; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ────────────────────────────────────────────────────────────
+       SERVICIOS
+    ──────────────────────────────────────────────────────────── */
+    #services {
+      padding: var(--section-gap) 0;
+    }
+    .services-header {
+      text-align: center; margin-bottom: 64px;
+    }
+    .services-header .section-sub { margin: 0 auto; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 30px;
+      transition: var(--transition);
+      cursor: default;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s;
+    }
+    .service-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      font-size: 2.4rem; margin-bottom: 20px;
+      display: inline-block;
+      transition: transform .3s;
+    }
+    .service-card:hover .service-icon { transform: scale(1.15) rotate(-5deg); }
+    .service-name {
+      font-size: 1.1rem; font-weight: 800; margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: .92rem; color: var(--text-muted); margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .service-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .tag {
+      font-size: .72rem; font-weight: 700;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px; border-radius: 99px;
+      font-family: var(--font-mono);
+    }
+    .service-price {
+      margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: .85rem; color: var(--text-muted);
+    }
+    .service-price strong { color: var(--accent); font-size: 1.1rem; }
+
+    /* ────────────────────────────────────────────────────────────
+       PROCESO
+    ──────────────────────────────────────────────────────────── */
+    #proceso {
+      padding: var(--section-gap) 0;
+      background: var(--bg-glass);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .proceso-header { margin-bottom: 64px; }
+    .proceso-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      position: relative;
+    }
+    .proceso-steps::before {
+      content: ''; position: absolute;
+      top: 32px; left: 10%; right: 10%; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      z-index: 0;
+    }
+    .step {
+      text-align: center; padding: 0 20px;
+      position: relative; z-index: 1;
+    }
+    .step-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1.1rem;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+    .step-title { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+    .step-desc { font-size: .88rem; color: var(--text-muted); }
+
+    @media (max-width: 640px) {
+      .proceso-steps::before { display: none; }
+      .proceso-steps { gap: 40px; }
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       PORTFOLIO
+    ──────────────────────────────────────────────────────────── */
+    #portfolio {
+      padding: var(--section-gap) 0;
+    }
+    .portfolio-header { margin-bottom: 48px; }
+    .portfolio-filters {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px;
+    }
+    .filter-btn {
+      padding: 8px 18px; border-radius: 99px;
+      font-size: .82rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition);
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .project-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(0,0,0,.3);
+    }
+    .project-img {
+      height: 200px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
+    }
+    .project-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, var(--bg-card));
+    }
+    .project-body { padding: 24px; }
+    .project-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .project-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; }
+    .project-desc { font-size: .88rem; color: var(--text-muted); margin-bottom: 20px; }
+    .project-links { display: flex; gap: 10px; }
+    .project-link {
+      font-size: .82rem; font-weight: 700; color: var(--accent);
+      display: flex; align-items: center; gap: 4px;
+      transition: gap .2s;
+    }
+    .project-link:hover { gap: 8px; }
+
+    /* ────────────────────────────────────────────────────────────
+       SKILLS / HABILIDADES
+    ──────────────────────────────────────────────────────────── */
+    #skills {
+      padding: var(--section-gap) 0;
+      background: var(--bg-glass);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: start;
+    }
+    .skills-category { margin-bottom: 36px; }
+    .skills-cat-title {
+      font-size: .78rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-subtle); margin-bottom: 20px;
+    }
+    .skill-bar-item { margin-bottom: 18px; }
+    .skill-bar-header {
+      display: flex; justify-content: space-between;
+      font-size: .88rem; font-weight: 600; margin-bottom: 8px;
+    }
+    .skill-bar-track {
+      height: 6px; background: var(--border);
+      border-radius: 99px; overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 99px;
+      width: 0; /* animado via JS */
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .skill-pct { color: var(--accent); font-family: var(--font-mono); font-size: .8rem; }
+
+    /* Radar de softskills */
+    .soft-skills {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .soft-skill {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .soft-skill:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    .soft-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .soft-name { font-size: .85rem; font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       TESTIMONIOS
+    ──────────────────────────────────────────────────────────── */
+    #testimonios {
+      padding: var(--section-gap) 0;
+    }
+    .testimonios-header { text-align: center; margin-bottom: 64px; }
+    .testimonios-header .section-sub { margin: 0 auto; }
+    .testimonios-slider {
+      position: relative; overflow: hidden;
+    }
+    .testimonios-track {
+      display: flex; gap: 24px;
+      transition: transform .5s cubic-bezier(.4,0,.2,1);
+    }
+    .testimonial-card {
+      min-width: calc(50% - 12px);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px; flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .testimonial-card { min-width: 100%; }
+    }
+    .stars { color: #fbbf24; font-size: 1.1rem; margin-bottom: 16px; }
+    .testimonial-text {
+      font-size: 1rem; color: var(--text-muted);
+      line-height: 1.7; margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .author-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: #fff; flex-shrink: 0;
+    }
+    .author-name { font-size: .95rem; font-weight: 800; }
+    .author-role { font-size: .8rem; color: var(--text-muted); }
+    .slider-controls {
+      display: flex; gap: 10px; justify-content: center; margin-top: 32px;
+    }
+    .slider-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border); cursor: pointer; transition: .2s;
+    }
+    .slider-dot.active {
+      width: 24px; border-radius: 4px; background: var(--accent);
+    }
+    .slider-arrows { display: flex; gap: 12px; }
+    .slider-arrow {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--bg-card); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: var(--transition);
+      font-size: 1.1rem;
+    }
+    .slider-arrow:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ────────────────────────────────────────────────────────────
+       CONTACTO
+    ──────────────────────────────────────────────────────────── */
+    #contacto {
+      padding: var(--section-gap) 0;
+      background: var(--bg-glass);
+      border-top: 1px solid var(--border);
+    }
+    .contacto-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    @media (max-width: 900px) { .contacto-grid { grid-template-columns: 1fr; gap: 48px; } }
+    .contacto-info .section-sub { margin-bottom: 40px; }
+    .contact-links { display: flex; flex-direction: column; gap: 16px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: var(--transition); font-size: .92rem;
+    }
+    .contact-link:hover { border-color: var(--accent); transform: translateX(6px); }
+    .contact-link-icon { font-size: 1.4rem; }
+    .contact-link-label { font-size: .75rem; color: var(--text-subtle); }
+    .contact-link-val { font-weight: 700; }
+
+    /* Form */
+    .contact-form {
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .form-group { position: relative; }
+    .form-label {
+      display: block; font-size: .8rem; font-weight: 700;
+      color: var(--text-muted); margin-bottom: 8px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .form-control {
+      width: 100%; padding: 14px 16px;
+      background: var(--bg-input);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text); font-size: .95rem;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-control:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-glow);
+    }
+    .form-control.error { border-color: #ef4444; }
+    .form-error {
+      font-size: .78rem; color: #ef4444;
+      margin-top: 6px; display: none;
+    }
+    .form-error.show { display: block; }
+    textarea.form-control { resize: vertical; min-height: 140px; }
+    .form-honeypot { display: none; }
+
+    /* Honeypot anti-spam oculto */
+    .hp { display: none !important; }
+
+    .form-success {
+      display: none; padding: 20px;
+      background: rgba(34,197,94,.1);
+      border: 1px solid #22c55e;
+      border-radius: var(--radius);
+      color: #22c55e; font-weight: 700;
+      text-align: center;
+    }
+    .form-success.show { display: block; }
+
+    /* Budget selector */
+    .budget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .budget-opt {
+      padding: 8px 16px; border-radius: 99px;
+      background: var(--bg-input); border: 2px solid var(--border);
+      color: var(--text-muted); font-size: .82rem; font-weight: 700;
+      cursor: pointer; transition: .2s;
+    }
+    .budget-opt.selected {
+      background: var(--accent); border-color: var(--accent); color: #fff;
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       FOOTER
+    ──────────────────────────────────────────────────────────── */
+    footer {
+      padding: 48px 0 32px;
+      border-top: 1px solid var(--border);
+      position: relative; z-index: 1;
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo { font-family: var(--font-mono); font-weight: 800; font-size: 1.1rem; }
+    .footer-logo span { color: var(--accent); }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: .85rem; color: var(--text-muted); transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { font-size: .8rem; color: var(--text-subtle); }
+    .social-links { display: flex; gap: 12px; }
+    .social-link {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--bg-glass); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: var(--transition);
+    }
+    .social-link:hover { border-color: var(--accent); transform: translateY(-3px); background: var(--accent); }
+
+    /* ────────────────────────────────────────────────────────────
+       BACK TO TOP
+    ──────────────────────────────────────────────────────────── */
+    #back-top {
+      position: fixed; bottom: 32px; right: 32px; z-index: 50;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s, transform .3s;
+      box-shadow: 0 0 24px var(--accent-glow);
+      color: #fff;
+    }
+    #back-top.show { opacity: 1; pointer-events: auto; }
+    #back-top:hover { transform: translateY(-4px); }
+
+    /* ────────────────────────────────────────────────────────────
+       ANIMACIONES DE ENTRADA (Intersection Observer)
+    ──────────────────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity .7s, transform .7s; }
+    .reveal-left.visible { opacity: 1; transform: none; }
+    .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity .7s, transform .7s; }
+    .reveal-right.visible { opacity: 1; transform: none; }
+
+    /* Delay helpers */
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; }
+    .d4 { transition-delay: .4s; }
+    .d5 { transition-delay: .5s; }
+
+    /* ────────────────────────────────────────────────────────────
+       LOADING SCREEN
+    ──────────────────────────────────────────────────────────── */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 24px;
+      transition: opacity .5s, transform .5s;
+    }
+    #loader.done { opacity: 0; pointer-events: none; }
+    .loader-logo {
+      font-family: var(--font-mono); font-size: 1.4rem; font-weight: 900;
+    }
+    .loader-logo span { color: var(--accent); }
+    .loader-bar {
+      width: 200px; height: 3px;
+      background: var(--border); border-radius: 99px; overflow: hidden;
+    }
+    .loader-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 99px;
+      animation: load-progress .9s ease forwards;
+    }
+    @keyframes load-progress { from { width: 0; } to { width: 100%; } }
+
+    /* ────────────────────────────────────────────────────────────
+       SECTION: CTA FINAL
+    ──────────────────────────────────────────────────────────── */
+    #cta-final {
+      padding: var(--section-gap) 0;
+      text-align: center;
+    }
+    .cta-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 80px 40px;
+      position: relative; overflow: hidden;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .cta-box .section-title { margin-bottom: 16px; }
+    .cta-box .section-sub { margin: 0 auto 36px; color: var(--text-muted); }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  </style>
+
+  <!-- Google Fonts preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ── LOADING SCREEN ───────────────────────────────────────── -->
+<div id="loader">
+  <div class="loader-logo">hugo<span>.dev</span></div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<!-- ── CURSOR ───────────────────────────────────────────────── -->
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- ── FONDO PARTÍCULAS ─────────────────────────────────────── -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- ── BACK TO TOP ──────────────────────────────────────────── -->
+<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     NAV
+═════════════════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#hero" class="nav-logo">hugo<span>.dev</span></a>
+    <ul class="nav-links">
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#testimonios">Reviews</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+      <a href="#contacto" class="btn btn-primary" style="padding:10px 22px;font-size:.85rem;">
+        Hablemos →
+      </a>
+      <div class="burger" id="burger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#services" class="mobile-link">Servicios</a>
+  <a href="#proceso" class="mobile-link">Proceso</a>
+  <a href="#portfolio" class="mobile-link">Portfolio</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#testimonios" class="mobile-link">Reviews</a>
+  <a href="#contacto" class="mobile-link">Contacto</a>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO
+═════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <!-- LEFT -->
+      <div class="hero-content">
+        <div class="hero-badge">Disponible para nuevos proyectos</div>
+        <h1 class="hero-title">
+          Construyo<br />
+          <span class="typed-wrapper"><span id="typed-text"></span><span class="cursor-blink"></span></span><br />
+          que generan resultados
+        </h1>
+        <p class="hero-desc">
+          Soy <strong>Hugo Arribas</strong>, desarrollador Full Stack e ingeniero de
+          automatización con IA. Transformo ideas en productos digitales escalables
+          en tiempo récord.
+        </p>
+        <div class="hero-cta">
+          <a href="#contacto" class="btn btn-primary">Iniciar proyecto →</a>
+          <a href="#portfolio" class="btn btn-outline">Ver mi trabajo</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num gradient-text" data-target="8">0</div>
+            <div class="stat-label">Proyectos entregados</div>
+          </div>
+          <div>
+            <div class="stat-num gradient-text" data-target="100">0</div>
+            <div class="stat-label">% Satisfacción</div>
+          </div>
+          <div>
+            <div class="stat-num gradient-text" data-target="42.3">0</div>
+            <div class="stat-label">h tiempo medio entrega</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT — ORB -->
+      <div class="hero-visual">
+        <div class="orb">
+          <div class="orb-inner">
+            <div class="orb-code">
+              const build = async () =&gt; {<br/>
+              &nbsp;&nbsp;await design();<br/>
+              &nbsp;&nbsp;await develop();<br/>
+              &nbsp;&nbsp;await deploy();<br/>
+              &nbsp;&nbsp;return profit;<br/>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="float-card fc-1">
+          <span class="fc-icon">⚡</span> Next.js 14
+        </div>
+        <div class="float-card fc-2">
+          <span class="fc-icon">🤖</span> OpenAI API
+        </div>
+        <div class="float-card fc-3">
+          <span class="fc-icon">🔐</span> Auth + SSL
+        </div>
+        <div class="float-card fc-4">
+          <span class="fc-icon">📈</span> +300% ROI
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     TECH TICKER
+═════════════════════════════════════════════════════════════ -->
+<div class="ticker-section">
+  <div class="ticker-track" id="ticker">
+    <div class="ticker-item"><span class="ti">⚛️</span> React / Next.js</div>
+    <div class="ticker-item"><span class="ti">🐍</span> Python / FastAPI</div>
+    <div class="ticker-item"><span class="ti">🤖</span> OpenAI / LangChain</div>
+    <div class="ticker-item"><span class="ti">☁️</span> AWS / Vercel</div>
+    <div class="ticker-item"><span class="ti">🗃️</span> PostgreSQL / Supabase</div>
+    <div class="ticker-item"><span class="ti">🔄</span> n8n / Make</div>
+    <div class="ticker-item"><span class="ti">📱</span> React Native</div>
+    <div class="ticker-item"><span class="ti">🔐</span> JWT / OAuth2</div>
+    <div class="ticker-item"><span class="ti">🐳</span> Docker / GitHub Actions</div>
+    <div class="ticker-item"><span class="ti">💳</span> Stripe</div>
+    <!-- duplicado para loop infinito -->
+    <div class="ticker-item"><span class="ti">⚛️</span> React / Next.js</div>
+    <div class="ticker-item"><span class="ti">🐍</span> Python / FastAPI</div>
+    <div class="ticker-item"><span class="ti">🤖</span> OpenAI / LangChain</div>
+    <div class="ticker-item"><span class="ti">☁️</span> AWS / Vercel</div>
+    <div class="ticker-item"><span class="ti">🗃️</span> PostgreSQL / Supabase</div>
+    <div class="ticker-item"><span class="ti">🔄</span> n8n / Make</div>
+    <div class="ticker-item"><span class="ti">📱</span> React Native</div>
+    <div class="ticker-item"><span class="ti">🔐</span> JWT / OAuth2</div>
+    <div class="ticker-item"><span class="ti">🐳</span> Docker / GitHub Actions</div>
+    <div class="ticker-item"><span class="ti">💳</span> Stripe</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     SERVICIOS
+═════════════════════════════════════════════════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="services-header reveal">
+      <p class="section-label">Lo que hago</p>
+      <h2 class="section-title">Servicios <span class="gradient-text">a medida</span></h2>
+      <p class="section-sub">Cada proyecto es único. Ofrezco soluciones concretas, sin jargon, con resultados medibles.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal d1">
+        <div class="service-icon">🤖</div>
+        <div class="service-name">Automatización con IA</div>
+        <p class="service-desc">
+          Elimino tareas repetitivas de tu empresa usando IA. Desde chatbots inteligentes
+          hasta pipelines de datos automatizados con GPT-4, Claude y modelos open-source.
+        </p>
+        <div class="service-tags">
+          <span class="tag">n8n</span>
+          <span class="tag">OpenAI</span>
+          <span class="tag">Make</span>
+          <span class="tag">LangChain</span>
+        </div>
+        <div class="service-price">Desde <strong>€159</strong> / proyecto</div>
+      </div>
+
+      <div class="service-card reveal d2">
+        <div class="service-icon">🚀</div>
+        <div class="service-name">Desarrollo Web Full Stack</div>
+        <p class="service-desc">
+          Aplicaciones web modernas y rápidas: desde landing pages de alta conversión
+          hasta SaaS completos con autenticación, pagos y panel de administración.
+        </p>
+        <div class="service-tags">
+          <span class="tag">Next.js</span>
+          <span class="tag">React</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">Stripe</span>
+        </div>
+        <div class="service-price">Desde <strong>€399</strong> / proyecto</div>
+      </div>
+
+      <div class="service-card reveal d3">
+        <div class="service-icon">📊</div>
+        <div class="service-name">Scraping & Análisis de Datos</div>
+        <p class="service-desc">
+          Extraigo datos de cualquier web y los transformo en dashboards interactivos
+          o informes automatizados que se actualizan solos.
+        </p>
+        <div class="service-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Playwright</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">Grafana</span>
+        </div>
+        <div class="service-price">Desde <strong>€149</strong> / proyecto</div>
+      </div>
+
+      <div class="service-card reveal d4" style="border-color:rgba(108,99,255,.4);cursor:pointer;" onclick="document.getElementById('bots-preview').scrollIntoView({behavior:'smooth'})">
+        <div class="service-icon">🤝</div>
+        <div class="service-name">Bots y Asistentes Virtuales</div>
+        <p class="service-desc">
+          Bots para Telegram, Discord, WhatsApp o tu propia web. Atención al cliente 24/7,
+          gestión de pedidos y automatización de workflows internos.
+        </p>
+        <div class="service-tags">
+          <span class="tag">Telegram API</span>
+          <span class="tag">Discord.js</span>
+          <span class="tag">WhatsApp API</span>
+          <span class="tag">FastAPI</span>
+        </div>
+        <div class="service-price">Desde <strong>€199</strong> / proyecto</div>
+        <div style="margin-top:16px;">
+          <span style="font-size:.8rem;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:6px;">
+            <span style="width:7px;height:7px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse-green 2s infinite;"></span>
+            Ver demo en vivo →
+          </span>
+        </div>
+      </div>
+      
+      <div class="service-card reveal d5">
+        <div class="service-icon">🧑‍💻</div>
+        <div class="service-name">Landing page</div>
+        <p class="service-desc">
+          Creo una web personalizada para tu negocio. Incluirá todo tipo de tecnología, capaz de modernizar tu negocio.
+        </p>
+        <div class="service-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Formspree</span>
+        </div>
+        <div class="service-price">Desde <strong>€99</strong> / proyecto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     BOTS PREVIEW
+═════════════════════════════════════════════════════════════ -->
+<section id="bots-preview" style="padding:80px 0;background:linear-gradient(180deg,var(--bg) 0%,rgba(108,99,255,.04) 50%,var(--bg) 100%);">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:56px;">
+      <p class="section-label">Demo en vivo</p>
+      <h2 class="section-title">Asistentes <span class="gradient-text">inteligentes</span></h2>
+      <p class="section-sub">Elige la plataforma y ve cómo tu asistente responde en tiempo real.</p>
+    </div>
+
+    <!-- TAB BUTTONS -->
+    <div id="bp-tabs" style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:40px;">
+      <button class="bp-tab active" data-tab="web"
+        style="padding:10px 24px;border-radius:50px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-weight:700;cursor:pointer;font-size:.9rem;transition:var(--transition);">
+        🌐 Web Widget
+      </button>
+      <button class="bp-tab" data-tab="telegram"
+        style="padding:10px 24px;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--text-muted);font-weight:600;cursor:pointer;font-size:.9rem;transition:var(--transition);">
+        ✈️ Telegram
+      </button>
+      <button class="bp-tab" data-tab="whatsapp"
+        style="padding:10px 24px;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--text-muted);font-weight:600;cursor:pointer;font-size:.9rem;transition:var(--transition);">
+        💬 WhatsApp
+      </button>
+      <button class="bp-tab" data-tab="discord"
+        style="padding:10px 24px;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--text-muted);font-weight:600;cursor:pointer;font-size:.9rem;transition:var(--transition);">
+        🎮 Discord
+      </button>
+    </div>
+
+    <!-- PANELS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;max-width:960px;margin:0 auto;" class="bp-grid">
+
+      <!-- LEFT: description -->
+      <div id="bp-desc" style="display:flex;flex-direction:column;gap:20px;">
+        <!-- filled by JS -->
+      </div>
+
+      <!-- RIGHT: mockup -->
+      <div id="bp-mockup" style="position:relative;">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="reveal" style="text-align:center;margin-top:56px;">
+      <a href="#contacto" style="display:inline-block;padding:14px 40px;background:var(--accent);color:#fff;border-radius:50px;font-weight:700;text-decoration:none;font-size:1rem;transition:var(--transition);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(108,99,255,.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        Quiero mi asistente →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+@media(max-width:720px){
+  .bp-grid{grid-template-columns:1fr !important;}
+}
+.bp-bubble{animation:bubbleFade .4s ease both;}
+@keyframes bubbleFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+</style>
+
+<script>
+(function(){
+  const PLATFORMS = {
+    web: {
+      color: '#6c63ff',
+      title: 'Widget Web',
+      emoji: '🌐',
+      desc: 'Un chat flotante que puedes integrar en cualquier web con una sola línea de código. Responde preguntas, gestiona leads y ofrece soporte 24/7.',
+      features: ['Instalación en 2 minutos','Diseño personalizable','Historial de conversación','Soporte multiidioma'],
+      headerBg: '#6c63ff',
+      headerText: 'Hugo Assistant',
+      bubbleStyle: function(role){ return role==='user' ? 'background:#6c63ff;color:#fff;align-self:flex-end;' : 'background:rgba(255,255,255,.07);color:var(--text);'; },
+      messages: [
+        {role:'bot', text:'👋 Hola! Soy el asistente de Hugo Arribas. ¿En qué te puedo ayudar?'},
+        {role:'user', text:'¿Qué servicios ofrece Hugo?'},
+        {role:'bot', text:'Hugo ofrece desarrollo web, automatizaciones con IA, bots para Telegram, WhatsApp y Discord, y mucho más. ¿Te interesa alguno en concreto?'},
+        {role:'user', text:'Me interesa una landing page.'},
+        {role:'bot', text:'Perfecto! Puedo pedirle que te prepare un presupuesto personalizado. ¿Me dejas tu email? 📧'},
+      ]
+    },
+    telegram: {
+      color: '#229ED9',
+      title: 'Bot de Telegram',
+      emoji: '✈️',
+      desc: 'Tu negocio disponible en Telegram. Los usuarios pueden hacer consultas, recibir notificaciones y completar flujos directamente desde la app que ya usan.',
+      features: ['Comandos personalizados','Notificaciones push','Flujos conversacionales','0 instalaciones para el usuario'],
+      headerBg: '#229ED9',
+      headerText: '@HugoAssistantBot',
+      bubbleStyle: function(role){ return role==='user' ? 'background:#229ED9;color:#fff;align-self:flex-end;' : 'background:rgba(255,255,255,.07);color:var(--text);'; },
+      messages: [
+        {role:'bot', text:'👋 Bienvenido al bot de Hugo Arribas. Escribe /ayuda para ver lo que puedo hacer.'},
+        {role:'user', text:'/ayuda'},
+        {role:'bot', text:'Puedo ayudarte con:\n• /presupuesto — solicitar presupuesto\n• /servicios — ver catálogo\n• /contacto — hablar con Hugo'},
+        {role:'user', text:'/presupuesto'},
+        {role:'bot', text:'Cuéntame qué necesitas y te preparo una propuesta en menos de 24 horas ⚡'},
+      ]
+    },
+    whatsapp: {
+      color: '#25D366',
+      title: 'Bot de WhatsApp',
+      emoji: '💬',
+      desc: 'Automatiza la atención al cliente en el canal de mensajería más popular de España. Respuestas instantáneas, menús interactivos y seguimiento de pedidos.',
+      features: ['Menús interactivos','Respuesta en segundos','Integración con CRM','Plantillas aprobadas por Meta'],
+      headerBg: '#075E54',
+      headerText: 'Hugo Arribas — Dev',
+      bubbleStyle: function(role){ return role==='user' ? 'background:#dcf8c6;color:#111;align-self:flex-end;' : 'background:rgba(255,255,255,.1);color:var(--text);'; },
+      messages: [
+        {role:'bot', text:'¡Hola! 👋 Soy el asistente de Hugo Arribas. ¿Cómo te puedo ayudar hoy?'},
+        {role:'user', text:'Hola! Quiero una tienda online.'},
+        {role:'bot', text:'Genial! Te puedo contar más sobre eso. ¿Tu tienda ya existe o la estamos creando desde cero?'},
+        {role:'user', text:'Desde cero, quiero vender ropa.'},
+        {role:'bot', text:'Perfecto. Una tienda con catálogo, carrito y pagos con Stripe puede estar lista en 2 semanas. ¿Te envío el presupuesto? 📋'},
+      ]
+    },
+    discord: {
+      color: '#5865F2',
+      title: 'Bot de Discord',
+      emoji: '🎮',
+      desc: 'Gestiona tu comunidad en Discord con un bot que responde preguntas, modera contenido, da la bienvenida a nuevos miembros y mucho más.',
+      features: ['Slash commands','Moderación automática','Roles automáticos','Integración con APIs externas'],
+      headerBg: '#5865F2',
+      headerText: '#soporte — Tu Servidor',
+      bubbleStyle: function(role){ return role==='user' ? 'background:#5865F2;color:#fff;align-self:flex-end;' : 'background:rgba(255,255,255,.07);color:var(--text);'; },
+      messages: [
+        {role:'bot', text:'🤖 HugoBot está online. ¡Escribe /ayuda para empezar!'},
+        {role:'user', text:'/ayuda'},
+        {role:'bot', text:'Comandos disponibles:\n• /info — información del servidor\n• /faq — preguntas frecuentes\n• /ticket — abrir soporte privado'},
+        {role:'user', text:'/ticket Tengo una duda sobre el plan premium'},
+        {role:'bot', text:'✅ Ticket #42 creado. Hugo te responderá en menos de 2 horas. ¡Gracias por tu paciencia!'},
+      ]
+    }
+  };
+
+  let currentTab = 'web';
+  let animTimer = null;
+
+  function renderDesc(p){
+    const pl = PLATFORMS[p];
+    document.getElementById('bp-desc').innerHTML =
+      '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;">' +
+        '<div style="font-size:2.5rem;margin-bottom:12px;">'+pl.emoji+'</div>' +
+        '<h3 style="font-size:1.4rem;font-weight:800;margin-bottom:12px;color:var(--text);">'+pl.title+'</h3>' +
+        '<p style="color:var(--text-muted);line-height:1.7;margin-bottom:24px;">'+pl.desc+'</p>' +
+        '<ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">' +
+          pl.features.map(function(f){ return '<li style="display:flex;align-items:center;gap:10px;color:var(--text);font-size:.9rem;"><span style="color:'+pl.color+';">✓</span>'+f+'</li>'; }).join('') +
+        '</ul>' +
+      '</div>';
+  }
+
+  function buildMockup(p){
+    const pl = PLATFORMS[p];
+    return '<div style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.08);">' +
+      '<div style="background:'+pl.headerBg+';padding:14px 18px;display:flex;align-items:center;gap:10px;">' +
+        '<div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;">🤖</div>' +
+        '<div><div style="font-weight:700;color:#fff;font-size:.9rem;">'+pl.headerText+'</div><div style="font-size:.7rem;color:rgba(255,255,255,.7);">● En línea</div></div>' +
+      '</div>' +
+      '<div id="bp-chat" style="background:#0d0d14;min-height:240px;max-height:320px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;">' +
+      '</div>' +
+      '<div style="background:#111118;padding:12px 16px;display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.06);">' +
+        '<div style="flex:1;background:rgba(255,255,255,.06);border-radius:20px;padding:10px 16px;font-size:.85rem;color:var(--text-muted);">Escribe un mensaje...</div>' +
+        '<div style="width:36px;height:36px;background:'+pl.color+';border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;">➤</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function addBubble(role, text, color){
+    const chat = document.getElementById('bp-chat');
+    if(!chat) return;
+    const bubble = document.createElement('div');
+    bubble.className = 'bp-bubble';
+    bubble.style.cssText = 'max-width:80%;padding:10px 14px;border-radius:16px;font-size:.85rem;line-height:1.5;white-space:pre-line;' + PLATFORMS[currentTab].bubbleStyle(role);
+    bubble.textContent = text;
+    chat.appendChild(bubble);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function animateMessages(tab){
+    if(animTimer) clearTimeout(animTimer);
+    const msgs = PLATFORMS[tab].messages;
+    let i = 0;
+    function next(){
+      if(i >= msgs.length || currentTab !== tab) return;
+      addBubble(msgs[i].role, msgs[i].text);
+      i++;
+      animTimer = setTimeout(next, 950);
+    }
+    animTimer = setTimeout(next, 300);
+  }
+
+  function switchTab(tab){
+    currentTab = tab;
+    // update tab styles
+    document.querySelectorAll('.bp-tab').forEach(function(btn){
+      var isActive = btn.dataset.tab === tab;
+      btn.style.background = isActive ? PLATFORMS[tab].color : 'transparent';
+      btn.style.borderColor = isActive ? PLATFORMS[tab].color : 'rgba(255,255,255,.08)';
+      btn.style.color = isActive ? '#fff' : 'var(--text-muted)';
+    });
+    renderDesc(tab);
+    document.getElementById('bp-mockup').innerHTML = buildMockup(tab);
+    animateMessages(tab);
+  }
+
+  document.querySelectorAll('.bp-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){ switchTab(btn.dataset.tab); });
+  });
+
+  // init
+  switchTab('web');
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════
+     PROCESO
+═════════════════════════════════════════════════════════════ -->
+<section id="proceso">
+  <div class="container">
+    <div class="proceso-header reveal">
+      <p class="section-label">Cómo trabajo</p>
+      <h2 class="section-title">Proceso <span class="gradient-text">transparente</span></h2>
+      <p class="section-sub">Sin sorpresas. Sabes exactamente en qué punto está tu proyecto en todo momento.</p>
+    </div>
+    <div class="proceso-steps">
+      <div class="step reveal d1">
+        <div class="step-num">01</div>
+        <div class="step-title">Discovery</div>
+        <p class="step-desc">Reunión de 30 min para entender tu problema y objetivos reales.</p>
+      </div>
+      <div class="step reveal d2">
+        <div class="step-num">02</div>
+        <div class="step-title">Propuesta</div>
+        <p class="step-desc">Presupuesto detallado, timeline y entregables concretos en 24h.</p>
+      </div>
+      <div class="step reveal d3">
+        <div class="step-num">03</div>
+        <div class="step-title">Desarrollo</div>
+        <p class="step-desc">Sprints semanales con demos en vivo. Tú ves el progreso real.</p>
+      </div>
+      <div class="step reveal d4">
+        <div class="step-num">04</div>
+        <div class="step-title">Entrega</div>
+        <p class="step-desc">Deploy, documentación y 30 días de soporte incluidos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PORTFOLIO
+═════════════════════════════════════════════════════════════ -->
+<section id="portfolio">
+  <div class="container">
+    <div class="portfolio-header reveal">
+      <p class="section-label">Trabajo reciente</p>
+      <h2 class="section-title">Portfolio <span class="gradient-text">& Proyectos</span></h2>
+      <p class="section-sub">Proyectos reales entregados. Cada uno con un problema concreto y una solución medible.</p>
+    </div>
+    <div class="portfolio-filters reveal">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="ia">IA</button>
+      <button class="filter-btn" data-filter="web">Web</button>
+      <button class="filter-btn" data-filter="bot">Bots</button>
+      <button class="filter-btn" data-filter="data">Datos</button>
+    </div>
+    <div class="portfolio-grid" id="portfolio-grid">
+
+      <div class="project-card reveal d1" data-cat="ia">
+        <div class="project-img">🧠</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">IA</span><span class="tag">GPT-4</span><span class="tag">Python</span>
+          </div>
+          <div class="project-title">JOYERÍA PLATA&CO</div>
+          <p class="project-desc">Joyería en línea con sistema de gestión de inventario y ventas.</p>
+          <div class="project-links">
+            <a href="https://plataco.netlify.app/" class="project-link">Ver demo →</a>
+            <a href="https://plataco.netlify.app/" class="project-link">Netlify →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal d2" data-cat="web">
+        <div class="project-img" style="background:linear-gradient(135deg,#22c55e,#16a34a)">🛒</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Web</span><span class="tag">Next.js</span><span class="tag">Stripe</span>
+          </div>
+          <div class="project-title">Blog</div>
+          <p class="project-desc">Blog personal con dietas y estilo de vida saludable.</p>
+          <div class="project-links">
+            <a href="https://blogsano.netlify.app/" class="project-link">Ver demo →</a>
+            <a href="https://github.com/HMJ07/blog" class="project-link">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal d3" data-cat="bot">
+        <div class="project-img" style="background:linear-gradient(135deg,#0ea5e9,#0284c7)">🤖</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Web</span><span class="tag">Moderna</span><span class="tag">OpenAI</span>
+          </div>
+          <div class="project-title">Página web Restaurante</div>
+          <p class="project-desc">Página web moderna para restaurante con sistema de gestión de reservas, menú y pagos.</p>
+          <div class="project-links">
+            <a href="https://materarest.netlify.app/" class="project-link">Ver demo →</a>
+            <a href="https://github.com/HMJ07/materarest" class="project-link">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal d4" data-cat="data">
+        <div class="project-img" style="background:linear-gradient(135deg,#f59e0b,#d97706)">📊</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Gestión</span><span class="tag">Inmobiliaria</span><span class="tag">Claude AI</span>
+          </div>
+          <div class="project-title">Aplicación de Gestión de Inmuebles</div>
+          <p class="project-desc">Aplicación web para la gestión de inmuebles con funcionalidades de búsqueda, reserva y administración de propiedades.</p>
+          <div class="project-links">
+            <a href="https://inmogestapp.netlify.app/" class="project-link">Ver demo →</a>
+            <a href="https://github.com/HMJ07/inmogest" class="project-link">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     SKILLS
+═════════════════════════════════════════════════════════════ -->
+<section id="skills">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:64px;">
+      <p class="section-label">Herramientas</p>
+      <h2 class="section-title">Stack <span class="gradient-text">técnico</span></h2>
+    </div>
+    <div class="skills-grid">
+      <div>
+        <div class="skills-category reveal">
+          <div class="skills-cat-title">Frontend</div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>React / Next.js</span><span class="skill-pct">90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>TypeScript</span><span class="skill-pct">82%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>CSS / Tailwind</span><span class="skill-pct">88%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
+          </div>
+        </div>
+        <div class="skills-category reveal d2">
+          <div class="skills-cat-title">Backend & IA</div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Python / FastAPI</span><span class="skill-pct">85%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>OpenAI / LangChain</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>PostgreSQL / Supabase</span><span class="skill-pct">78%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="78"></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="reveal d1" style="margin-bottom:20px;">
+          <div class="skills-cat-title">Habilidades blandas</div>
+        </div>
+        <div class="soft-skills reveal d2">
+          <div class="soft-skill">
+            <div class="soft-icon">⚡</div>
+            <div class="soft-name">Entrega rápida</div>
+          </div>
+          <div class="soft-skill">
+            <div class="soft-icon">💬</div>
+            <div class="soft-name">Comunicación clara</div>
+          </div>
+          <div class="soft-skill">
+            <div class="soft-icon">🎯</div>
+            <div class="soft-name">Orientado a resultados</div>
+          </div>
+          <div class="soft-skill">
+            <div class="soft-icon">🔄</div>
+            <div class="soft-name">Iteración ágil</div>
+          </div>
+          <div class="soft-skill">
+            <div class="soft-icon">📋</div>
+            <div class="soft-name">Documentación</div>
+          </div>
+          <div class="soft-skill">
+            <div class="soft-icon">🔐</div>
+            <div class="soft-name">Código seguro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     TESTIMONIOS
+═════════════════════════════════════════════════════════════ -->
+<section id="testimonios">
+  <div class="container">
+    <div class="testimonios-header reveal">
+      <p class="section-label">Clientes satisfechos</p>
+      <h2 class="section-title">Lo que dicen <span class="gradient-text">de mí</span></h2>
+      <p class="section-sub">Resultados reales de clientes reales. Sin filtros.</p>
+    </div>
+    <div class="testimonios-slider reveal">
+      <div class="testimonios-track" id="testimonios-track">
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Hugo entregó en 4 días lo que otros freelancers cotizaban en 3 semanas. El bot de atención al cliente ha reducido mi carga de trabajo a la mitad. 100% recomendable."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MC</div>
+            <div>
+              <div class="author-name">María C.</div>
+              <div class="author-role">CEO · E-commerce de moda</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Necesitaba automatizar el proceso de onboarding de mi SaaS. Hugo lo construyó limpio, bien documentado y en plazo. Lo que más valoro: explica todo sin tecnicismos."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JR</div>
+            <div>
+              <div class="author-name">Juan R.</div>
+              <div class="author-role">Founder · EdTech startup</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"El dashboard de análisis de competencia que me hizo es increíble. Actualización en tiempo real, alertas por Telegram y un diseño que hasta le enseño a los inversores."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AL</div>
+            <div>
+              <div class="author-name">Ana L.</div>
+              <div class="author-role">CMO · Agencia de marketing</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Contraté a Hugo para un scraper sencillo y acabó optimizando toda nuestra pipeline de datos. Ahora tardamos 10x menos en generar informes. Enorme valor por el precio."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">PG</div>
+            <div>
+              <div class="author-name">Pablo G.</div>
+              <div class="author-role">Data Lead · Consultora financiera</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="slider-controls reveal">
+      <div class="slider-arrows">
+        <div class="slider-arrow" id="prev-slide">←</div>
+        <div class="slider-arrow" id="next-slide">→</div>
+      </div>
+      <div id="slider-dots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     CTA FINAL
+═════════════════════════════════════════════════════════════ -->
+<section id="cta-final">
+  <div class="container">
+    <div class="cta-box reveal">
+      <p class="section-label">¿Tienes un proyecto?</p>
+      <h2 class="section-title">Construyamos algo<br /><span class="gradient-text">juntos</span></h2>
+      <p class="section-sub">Respondo en menos de 2 horas en horario laboral. Primera consulta gratuita.</p>
+      <div class="cta-actions">
+        <a href="#contacto" class="btn btn-primary">Iniciar proyecto →</a>
+        <a href="mailto:hugoarribasmunoz2019@gmail.com" class="btn btn-outline">Enviar email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     CONTACTO
+═════════════════════════════════════════════════════════════ -->
+<section id="contacto">
+  <div class="container">
+    <div class="contacto-grid">
+      <div class="contacto-info reveal-left">
+        <p class="section-label">Contacto</p>
+        <h2 class="section-title">Hablemos de<br /><span class="gradient-text">tu proyecto</span></h2>
+        <p class="section-sub">Cuéntame qué necesitas. Te respondo con una propuesta concreta en menos de 24h.</p>
+        <div class="contact-links" style="margin-top:36px;">
+          <a href="mailto:hugoarribasmunoz2019@gmail.com" class="contact-link">
+            <span class="contact-link-icon">📧</span>
+            <div>
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-val">hugoarribasmunoz2019@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/hugo-arribas" target="_blank" class="contact-link">
+            <span class="contact-link-icon">💼</span>
+            <div>
+              <div class="contact-link-label">LinkedIn</div>
+              <!-- ✏️ CAMBIA esta URL por tu perfil real -->
+              <div class="contact-link-val">linkedin.com/in/hugo-arribas-mu%C3%B1oz/</div>
+              <div class="badge-base LI-profile-badge" data-locale="es_ES" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="hugo-arribas-muñoz-653160379" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/hugo-arribas-mu%C3%B1oz/=profile-badge">Hugo Arribas Muñoz</a></div>
+            </div>
+          </a>
+          <a href="https://github.com/HMJ07" target="_blank" class="contact-link">
+            <span class="contact-link-icon">💻</span>
+            <div>
+              <div class="contact-link-label">GitHub</div>
+              <!-- ✏️ CAMBIA esta URL por tu GitHub real -->
+              <div class="contact-link-val">github.com/HMJ07</div>
+            </div>
+          </a>
+          <div class="contact-link">
+            <span class="contact-link-icon">⏱️</span>
+            <div>
+              <div class="contact-link-label">Tiempo de respuesta</div>
+              <div class="contact-link-val">Menos de 2 horas (L–V)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-right">
+        <form class="contact-form" id="contact-form" novalidate>
+          <!-- Anti-spam honeypot (invisible para humanos) -->
+          <input type="text" name="_honeypot" class="hp" tabindex="-1" autocomplete="off" />
+
+          <div class="form-group">
+            <label class="form-label" for="f-name">Tu nombre *</label>
+            <input class="form-control" type="text" id="f-name" name="name"
+              placeholder="Juan García" required />
+            <span class="form-error" id="err-name">Por favor, escribe tu nombre.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-email">Email *</label>
+            <input class="form-control" type="email" id="f-email" name="email"
+              placeholder="juan@empresa.com" required />
+            <span class="form-error" id="err-email">Introduce un email válido.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Presupuesto aproximado</label>
+            <div class="budget-options">
+              <span class="budget-opt" data-val="<300">&lt;€300</span>
+              <span class="budget-opt" data-val="300-1k">€300–1k</span>
+              <span class="budget-opt" data-val="1k-5k">€1k–5k</span>
+              <span class="budget-opt" data-val=">5k">&gt;€5k</span>
+            </div>
+            <input type="hidden" id="f-budget" name="budget" value="" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-message">Cuéntame tu proyecto *</label>
+            <textarea class="form-control" id="f-message" name="message"
+              placeholder="Necesito una automatización que... / Quiero construir una app que..."
+              required></textarea>
+            <span class="form-error" id="err-message">Escribe al menos 20 caracteres.</span>
+          </div>
+
+          <div class="form-success" id="form-success">
+            ✅ ¡Mensaje enviado! Te respondo en menos de 2 horas.
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;" id="form-submit">
+            Enviar mensaje →
+          </button>
+          <p style="font-size:.75rem;color:var(--text-subtle);text-align:center;margin-top:8px;">
+            🔒 Tus datos están seguros. Sin spam, nunca.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+═════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-logo">hugo<span>.dev</span></div>
+    <ul class="footer-links">
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="social-links">
+      <!-- ✏️ Cambia las href por tus redes reales -->
+      <a href="https://github.com/hugo-arribas" target="_blank" class="social-link" title="GitHub">⌨️</a>
+      <a href="https://linkedin.com/in/hugo-arribas" target="_blank" class="social-link" title="LinkedIn">💼</a>
+      <a href="https://twitter.com/hugo_dev" target="_blank" class="social-link" title="Twitter">🐦</a>
+    </div>
+    <div class="footer-copy">© 2025 Hugo Arribas Muñoz · Todos los derechos reservados</div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════
+     JAVASCRIPT
+═════════════════════════════════════════════════════════════ -->
+<script>
+/* ── LOADER ─────────────────────────────────────────────────── */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('done');
+  }, 950);
+});
+
+/* ── CURSOR PERSONALIZADO ───────────────────────────────────── */
+const dot  = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  dot.style.transform  = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
+  ring.style.transform = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
+});
+document.querySelectorAll('a,button,.btn,.filter-btn,.budget-opt,.slider-arrow').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+});
+
+/* ── NAVBAR SCROLL ─────────────────────────────────────────── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+  document.getElementById('back-top').classList.toggle('show', window.scrollY > 400);
+});
+
+/* ── THEME TOGGLE ───────────────────────────────────────────── */
+const html = document.documentElement;
+const themeBtn = document.getElementById('theme-toggle');
+themeBtn.addEventListener('click', () => {
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+});
+// Restaurar tema guardado
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) html.dataset.theme = savedTheme;
+
+/* ── MOBILE MENU ────────────────────────────────────────────── */
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobile-menu');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    burger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+/* ── TYPED EFFECT ───────────────────────────────────────────── */
+const typedEl = document.getElementById('typed-text');
+const words   = ['productos digitales','automatizaciones IA','apps escalables','soluciones reales'];
+let wi = 0, ci = 0, deleting = false;
+function typeLoop() {
+  const word = words[wi];
+  if (!deleting) {
+    typedEl.textContent = word.slice(0, ++ci);
+    if (ci === word.length) { deleting = true; setTimeout(typeLoop, 1800); return; }
+  } else {
+    typedEl.textContent = word.slice(0, --ci);
+    if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
+  }
+  setTimeout(typeLoop, deleting ? 55 : 90);
+}
+typeLoop();
+
+/* ── CONTADOR STATS ─────────────────────────────────────────── */
+function animateCount(el) {
+  const target = +el.dataset.target;
+  const suffix = el.dataset.suffix || '';
+  let current = 0;
+  const step = Math.ceil(target / 40);
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = current + suffix;
+    if (current >= target) clearInterval(timer);
+  }, 40);
+}
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCount(e.target);
+      statsObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: .6 });
+document.querySelectorAll('.stat-num').forEach(el => statsObserver.observe(el));
+
+/* ── SKILL BARS ─────────────────────────────────────────────── */
+const barObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.width = e.target.dataset.width + '%';
+      barObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: .5 });
+document.querySelectorAll('.skill-bar-fill').forEach(el => barObserver.observe(el));
+
+/* ── REVEAL ON SCROLL ───────────────────────────────────────── */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: .12 });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => revealObserver.observe(el));
+
+/* ── PORTFOLIO FILTER ───────────────────────────────────────── */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('#portfolio-grid .project-card').forEach(card => {
+      const show = filter === 'all' || card.dataset.cat === filter;
+      card.style.display = show ? '' : 'none';
+      if (show) {
+        card.style.animation = 'none';
+        requestAnimationFrame(() => { card.style.animation = ''; });
+      }
+    });
+  });
+});
+
+/* ── TESTIMONIOS SLIDER ─────────────────────────────────────── */
+(function() {
+  const track  = document.getElementById('testimonios-track');
+  const cards  = track.querySelectorAll('.testimonial-card');
+  const dotsEl = document.getElementById('slider-dots');
+  let current = 0;
+  const perSlide = window.innerWidth < 769 ? 1 : 2;
+  const total = Math.ceil(cards.length / perSlide);
+
+  // dots
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'slider-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    const offset = current * (perSlide === 2 ? 50 : 100);
+    track.style.transform = `translateX(-${offset}%)`;
+    document.querySelectorAll('.slider-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+  document.getElementById('prev-slide').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('next-slide').addEventListener('click', () => goTo(current + 1));
+
+  // auto-slide
+  let autoSlide = setInterval(() => goTo(current + 1), 5000);
+  track.addEventListener('mouseenter', () => clearInterval(autoSlide));
+  track.addEventListener('mouseleave', () => { autoSlide = setInterval(() => goTo(current + 1), 5000); });
+})();
+
+/* ── BUDGET SELECTOR ────────────────────────────────────────── */
+document.querySelectorAll('.budget-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.budget-opt').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    document.getElementById('f-budget').value = opt.dataset.val;
+  });
+});
+
+/* ── CONTACT FORM VALIDATION + SUBMIT ──────────────────────── */
+const form = document.getElementById('contact-form');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Anti-spam honeypot check
+  if (form._honeypot.value) return;
+
+  let valid = true;
+  const name    = document.getElementById('f-name');
+  const email   = document.getElementById('f-email');
+  const message = document.getElementById('f-message');
+
+  // Reset errors
+  ['f-name','f-email','f-message'].forEach(id => {
+    document.getElementById(id).classList.remove('error');
+  });
+  ['err-name','err-email','err-message'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+
+  if (!name.value.trim()) {
+    name.classList.add('error');
+    document.getElementById('err-name').classList.add('show');
+    valid = false;
+  }
+  if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    email.classList.add('error');
+    document.getElementById('err-email').classList.add('show');
+    valid = false;
+  }
+  if (message.value.trim().length < 20) {
+    message.classList.add('error');
+    document.getElementById('err-message').classList.add('show');
+    valid = false;
+  }
+  if (!valid) return;
+
+  const btn = document.getElementById('form-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+
+   try {
+     const res = await fetch('https://formspree.io/f/xeewdrnz', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+       body: JSON.stringify({
+         name: name.value, email: email.value,
+         budget: document.getElementById('f-budget').value,
+         message: message.value
+       })
+     });
+     if (!res.ok) throw new Error();
+     document.getElementById('form-success').classList.add('show');
+     form.reset();
+     document.querySelectorAll('.budget-opt').forEach(o => o.classList.remove('selected'));
+   } catch {
+     btn.textContent = 'Error. Inténtalo de nuevo.';
+   } finally { btn.disabled = false; }
+
+ 
+  // ────────────────────────────────────────────────────────────
+});
+
+/* ── PARTÍCULAS (canvas) ────────────────────────────────────── */
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles;
+  const N = 70;
+  const SPEED = .35;
+  const MAX_DIST = 120;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function randomParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - .5) * SPEED,
+      vy: (Math.random() - .5) * SPEED,
+      r: Math.random() * 1.5 + .5,
+    };
+  }
+  particles = Array.from({ length: N }, randomParticle);
+
+  const accentColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--accent').trim() || '#6c63ff';
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // Update
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    });
+    // Lines
+    for (let i = 0; i < N; i++) {
+      for (let j = i + 1; j < N; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MAX_DIST) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(108,99,255,${(1 - dist / MAX_DIST) * .3})`;
+          ctx.lineWidth = .6;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    // Dots
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(108,99,255,.7)';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── SMOOTH SCROLL para nav links ───────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+<!-- ════════════════════════════════════════════════════════════
+     CHATBOT WIDGET — Hugo Assistant
+     Configuración: cambia BACKEND_URL por tu dominio en producción
+     Para desarrollo local: uvicorn backend.main:app (puerto 8000)
+════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  /* ── CONFIGURACIÓN ─────────────────────────────────────────
+     En producción: BACKEND_URL = 'https://TU-DOMINIO.com'
+     En local:      BACKEND_URL = 'http://localhost:8000'
+  ──────────────────────────────────────────────────────────── */
+  const BACKEND_URL = 'http://localhost:8000';
+
+  const ACCENT  = '#6c63ff';   // ← mismo que --accent del site
+  const BG      = '#0a0a0f';
+  const BGCARD  = '#111118';
+  const BORDER  = 'rgba(255,255,255,.08)';
+  const TEXT    = '#f0f0ff';
+  const MUTED   = '#8888aa';
+
+  const SYSTEM_PROMPT = `Eres Hugo Assistant, el asistente virtual del portfolio de Hugo Arribas Muñoz.
+
+SOBRE HUGO:
+Desarrollador Full Stack e Ingeniero de Automatización con IA. Disponible para nuevos proyectos.
+Responde en menos de 2 horas (L–V). Primera consulta gratuita.
+
+SERVICIOS Y PRECIOS:
+• Automatización con IA — desde €159 (n8n, OpenAI, Make, LangChain)
+• Desarrollo Web Full Stack — desde €399 (Next.js, React, Supabase, Stripe)
+• Scraping & Análisis de Datos — desde €149 (Python, Playwright, Pandas, Grafana)
+• Bots y Asistentes Virtuales — desde €199 (Telegram, Discord, WhatsApp, web)
+• Landing Pages — desde €99 (HTML, CSS, Node.js)
+
+PROYECTOS DESTACADOS:
+- Joyería Plata&Co (e-commerce)
+- Blog de salud y estilo de vida
+- Web de restaurante con reservas
+- App de gestión de inmuebles
+
+CONTACTO:
+• Email: hugoarribasmunoz2019@gmail.com
+• LinkedIn: linkedin.com/in/hugo-arribas-muñoz/
+• GitHub: github.com/HMJ07
+• Web: https://hugoam-dev.netlify.app/
+
+INSTRUCCIONES:
+- Responde siempre en el idioma del usuario (español o inglés).
+- Sé directo, amable y profesional. Máximo 3 párrafos por respuesta.
+- Para presupuesto exacto, siempre dirige al email o al formulario de contacto.
+- Si preguntan por disponibilidad, di que está disponible ahora mismo.
+- No inventes plazos de entrega ni garantías específicas que no estén aquí.`;
+
+  const history = [];
+  const sessionId = 'hg_' + Math.random().toString(36).slice(2);
+
+  /* ── ESTILOS ──────────────────────────────────────────────── */
+  const style = document.createElement('style');
+  style.textContent = `
+    #hg-btn {
+      position: fixed; bottom: 32px; right: 96px; z-index: 200;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, ${ACCENT}, #ff6584);
+      border: none; cursor: pointer;
+      box-shadow: 0 0 28px rgba(108,99,255,.5);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .25s, box-shadow .25s;
+      font-size: 22px;
+    }
+    #hg-btn:hover { transform: scale(1.12) translateY(-2px); box-shadow: 0 0 44px rgba(108,99,255,.7); }
+    #hg-btn .hg-notif {
+      position: absolute; top: -4px; right: -4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #22c55e; border: 2px solid ${BG};
+      animation: hg-pulse 2s infinite;
+    }
+    @keyframes hg-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+      50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+    }
+    #hg-box {
+      position: fixed; bottom: 96px; right: 32px; z-index: 200;
+      width: 360px; border-radius: 20px;
+      background: ${BG}; border: 1px solid rgba(108,99,255,.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+      display: none; flex-direction: column; overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .3s;
+      transform: translateY(12px) scale(.97); opacity: 0;
+    }
+    #hg-box.open {
+      display: flex;
+      animation: hg-appear .25s cubic-bezier(.4,0,.2,1) forwards;
+    }
+    @keyframes hg-appear {
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    #hg-head {
+      background: linear-gradient(135deg, ${ACCENT}, #8b83ff);
+      padding: 16px 18px; color: #fff; display: flex;
+      align-items: center; gap: 10px;
+    }
+    #hg-head .hg-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    #hg-head .hg-title { font-weight: 800; font-size: 14px; line-height: 1.2; }
+    #hg-head .hg-status { font-size: 11px; opacity: .8; display: flex; align-items: center; gap: 5px; }
+    #hg-head .hg-status::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: #22c55e; display: inline-block;
+    }
+    #hg-close {
+      margin-left: auto; background: none; border: none;
+      color: rgba(255,255,255,.7); font-size: 18px; cursor: pointer;
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: background .2s;
+    }
+    #hg-close:hover { background: rgba(255,255,255,.15); color: #fff; }
+    #hg-msgs {
+      flex: 1; max-height: 320px; overflow-y: auto;
+      padding: 16px; display: flex; flex-direction: column; gap: 10px;
+      scroll-behavior: smooth;
+    }
+    #hg-msgs::-webkit-scrollbar { width: 4px; }
+    #hg-msgs::-webkit-scrollbar-thumb { background: rgba(108,99,255,.4); border-radius: 99px; }
+    .hg-msg {
+      max-width: 85%; padding: 10px 14px; border-radius: 14px;
+      font-size: 13.5px; line-height: 1.5; word-break: break-word;
+    }
+    .hg-msg.bot {
+      background: ${BGCARD}; color: ${TEXT};
+      align-self: flex-start; border-bottom-left-radius: 4px;
+      border: 1px solid ${BORDER};
+    }
+    .hg-msg.user {
+      background: linear-gradient(135deg, ${ACCENT}, #8b83ff);
+      color: #fff; align-self: flex-end; border-bottom-right-radius: 4px;
+    }
+    .hg-msg.typing { opacity: .6; }
+    .hg-msg a { color: #a5b4fc; text-decoration: underline; }
+    #hg-suggestions {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 16px 12px;
+    }
+    .hg-sug {
+      background: ${BGCARD}; border: 1px solid rgba(108,99,255,.3);
+      color: ${ACCENT}; font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: 99px; cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .hg-sug:hover { background: rgba(108,99,255,.15); border-color: ${ACCENT}; }
+    #hg-form {
+      padding: 12px 14px; border-top: 1px solid ${BORDER};
+      display: flex; gap: 8px; background: ${BGCARD};
+    }
+    #hg-input {
+      flex: 1; background: ${BG}; border: 1px solid ${BORDER};
+      border-radius: 10px; padding: 10px 14px;
+      color: ${TEXT}; font-size: 13.5px; outline: none;
+      transition: border-color .2s;
+      font-family: inherit;
+    }
+    #hg-input:focus { border-color: ${ACCENT}; }
+    #hg-input::placeholder { color: ${MUTED}; }
+    #hg-send {
+      background: linear-gradient(135deg, ${ACCENT}, #8b83ff);
+      border: none; border-radius: 10px;
+      padding: 10px 14px; color: #fff; cursor: pointer;
+      font-size: 16px; transition: opacity .15s, transform .15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #hg-send:hover { opacity: .9; transform: scale(1.05); }
+    #hg-send:disabled { opacity: .3; cursor: default; transform: none; }
+    #hg-powered {
+      text-align: center; padding: 8px;
+      font-size: 10px; color: ${MUTED};
+      background: ${BGCARD}; border-top: 1px solid ${BORDER};
+    }
+    @media (max-width: 480px) {
+      #hg-box { width: calc(100vw - 24px); right: 12px; }
+      #hg-btn { right: 72px; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* ── ESTRUCTURA HTML ─────────────────────────────────────── */
+  const btn = document.createElement('button');
+  btn.id = 'hg-btn';
+  btn.setAttribute('aria-label', 'Abrir chat con Hugo Assistant');
+  btn.innerHTML = `💬<span class="hg-notif"></span>`;
+
+  const box = document.createElement('div');
+  box.id = 'hg-box';
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-label', 'Chat con Hugo Assistant');
+  box.innerHTML = `
+    <div id="hg-head">
+      <div class="hg-avatar">🤖</div>
+      <div>
+        <div class="hg-title">Hugo Assistant</div>
+        <div class="hg-status">Disponible ahora</div>
+      </div>
+      <button id="hg-close" aria-label="Cerrar chat">✕</button>
+    </div>
+    <div id="hg-msgs" role="log" aria-live="polite">
+      <div class="hg-msg bot">¡Hola! Soy el asistente de Hugo. Puedo contarte sobre sus servicios, precios y cómo trabajar con él. ¿En qué te ayudo? 👋</div>
+    </div>
+    <div id="hg-suggestions">
+      <span class="hg-sug">¿Qué servicios ofreces?</span>
+      <span class="hg-sug">¿Cuánto cuesta una web?</span>
+      <span class="hg-sug">¿Estás disponible?</span>
+    </div>
+    <form id="hg-form" onsubmit="return false">
+      <input id="hg-input" type="text" placeholder="Escribe tu pregunta…" autocomplete="off" />
+      <button id="hg-send" type="submit" aria-label="Enviar">
+        <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </form>
+    <div id="hg-powered">⚡ Powered by Claude AI</div>
+  `;
+
+  document.body.appendChild(btn);
+  document.body.appendChild(box);
+
+  /* ── LÓGICA ──────────────────────────────────────────────── */
+  btn.addEventListener('click', toggleChat);
+  document.getElementById('hg-close').addEventListener('click', closeChat);
+
+  function toggleChat() {
+    if (box.classList.contains('open')) {
+      closeChat();
+    } else {
+      box.classList.add('open');
+      btn.innerHTML = `✕`;
+      document.getElementById('hg-input').focus();
+    }
+  }
+  function closeChat() {
+    box.classList.remove('open');
+    btn.innerHTML = `💬<span class="hg-notif"></span>`;
+  }
+
+  // Sugerencias rápidas
+  document.querySelectorAll('.hg-sug').forEach(sug => {
+    sug.addEventListener('click', () => {
+      document.getElementById('hg-input').value = sug.textContent;
+      document.getElementById('hg-suggestions').style.display = 'none';
+      sendMessage();
+    });
+  });
+
+  async function sendMessage() {
+    const input   = document.getElementById('hg-input');
+    const sendBtn = document.getElementById('hg-send');
+    const msgs    = document.getElementById('hg-msgs');
+    const text    = input.value.trim();
+    if (!text) return;
+
+    // Ocultar sugerencias al enviar el primer mensaje
+    document.getElementById('hg-suggestions').style.display = 'none';
+
+    input.value = '';
+    sendBtn.disabled = true;
+
+    // Mensaje del usuario
+    const uDiv = document.createElement('div');
+    uDiv.className = 'hg-msg user';
+    uDiv.textContent = text;
+    msgs.appendChild(uDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // Indicador "escribiendo..."
+    const bDiv = document.createElement('div');
+    bDiv.className = 'hg-msg bot typing';
+    bDiv.textContent = '…';
+    msgs.appendChild(bDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    history.push({ role: 'user', content: text });
+    if (history.length > 20) history.splice(0, 2);
+
+    try {
+      /* ── Backend FastAPI con timeout de 20s ── */
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 20000);
+
+      const res = await fetch(`${BACKEND_URL}/widget/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId, message: text }),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+
+      if (!res.ok) throw new Error('backend-error');
+      const data = await res.json();
+      const reply = data.reply;
+      bDiv.innerHTML = reply.replace(/\n/g, '<br>');
+      bDiv.classList.remove('typing');
+      history.push({ role: 'assistant', content: reply });
+
+    } catch {
+      /* ── Fallback: mensaje de contacto directo ── */
+      bDiv.innerHTML = `No puedo conectar ahora mismo. Puedes contactar directamente con Hugo:<br><br>
+        📧 <a href="mailto:hugoarribasmunoz2019@gmail.com">hugoarribasmunoz2019@gmail.com</a><br>
+        ⏱️ Responde en menos de 2 horas (L–V)`;
+      bDiv.classList.remove('typing');
+    }
+
+    sendBtn.disabled = false;
+    msgs.scrollTop = msgs.scrollHeight;
+    input.focus();
+  }
+
+  document.getElementById('hg-form').addEventListener('submit', sendMessage);
+  document.getElementById('hg-send').addEventListener('click', sendMessage);
+  document.getElementById('hg-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  // Abrir automáticamente tras 8 segundos (primera visita)
+  if (!sessionStorage.getItem('hg_opened')) {
+    setTimeout(() => {
+      if (!box.classList.contains('open')) {
+        toggleChat();
+        sessionStorage.setItem('hg_opened', '1');
+      }
+    }, 8000);
+  }
+})();
+</script>
+</body>
+</html>
