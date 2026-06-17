@@ -1910,5 +1910,339 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 </script>
+
+<!-- ════════════════════════════════════════════════════════════
+     CHATBOT WIDGET — Hugo Assistant
+     Configuración: cambia BACKEND_URL por tu dominio en producción
+     Para desarrollo local: uvicorn backend.main:app (puerto 8000)
+════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  /* ── CONFIGURACIÓN ─────────────────────────────────────────
+     En producción: BACKEND_URL = 'https://TU-DOMINIO.com'
+     En local:      BACKEND_URL = 'http://localhost:8000'
+  ──────────────────────────────────────────────────────────── */
+  const BACKEND_URL = 'http://localhost:8000';
+
+  const ACCENT  = '#6c63ff';   // ← mismo que --accent del site
+  const BG      = '#0a0a0f';
+  const BGCARD  = '#111118';
+  const BORDER  = 'rgba(255,255,255,.08)';
+  const TEXT    = '#f0f0ff';
+  const MUTED   = '#8888aa';
+
+  const SYSTEM_PROMPT = `Eres Hugo Assistant, el asistente virtual del portfolio de Hugo Arribas Muñoz.
+
+SOBRE HUGO:
+Desarrollador Full Stack e Ingeniero de Automatización con IA. Disponible para nuevos proyectos.
+Responde en menos de 2 horas (L–V). Primera consulta gratuita.
+
+SERVICIOS Y PRECIOS:
+• Automatización con IA — desde €159 (n8n, OpenAI, Make, LangChain)
+• Desarrollo Web Full Stack — desde €399 (Next.js, React, Supabase, Stripe)
+• Scraping & Análisis de Datos — desde €149 (Python, Playwright, Pandas, Grafana)
+• Bots y Asistentes Virtuales — desde €199 (Telegram, Discord, WhatsApp, web)
+• Landing Pages — desde €99 (HTML, CSS, Node.js)
+
+PROYECTOS DESTACADOS:
+- Joyería Plata&Co (e-commerce)
+- Blog de salud y estilo de vida
+- Web de restaurante con reservas
+- App de gestión de inmuebles
+
+CONTACTO:
+• Email: hugoarribasmunoz2019@gmail.com
+• LinkedIn: linkedin.com/in/hugo-arribas-muñoz/
+• GitHub: github.com/HMJ07
+• Web: https://hugoam-dev.netlify.app/
+
+INSTRUCCIONES:
+- Responde siempre en el idioma del usuario (español o inglés).
+- Sé directo, amable y profesional. Máximo 3 párrafos por respuesta.
+- Para presupuesto exacto, siempre dirige al email o al formulario de contacto.
+- Si preguntan por disponibilidad, di que está disponible ahora mismo.
+- No inventes plazos de entrega ni garantías específicas que no estén aquí.`;
+
+  const history = [];
+  const sessionId = 'hg_' + Math.random().toString(36).slice(2);
+
+  /* ── ESTILOS ──────────────────────────────────────────────── */
+  const style = document.createElement('style');
+  style.textContent = `
+    #hg-btn {
+      position: fixed; bottom: 32px; right: 96px; z-index: 200;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, ${ACCENT}, #ff6584);
+      border: none; cursor: pointer;
+      box-shadow: 0 0 28px rgba(108,99,255,.5);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .25s, box-shadow .25s;
+      font-size: 22px;
+    }
+    #hg-btn:hover { transform: scale(1.12) translateY(-2px); box-shadow: 0 0 44px rgba(108,99,255,.7); }
+    #hg-btn .hg-notif {
+      position: absolute; top: -4px; right: -4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #22c55e; border: 2px solid ${BG};
+      animation: hg-pulse 2s infinite;
+    }
+    @keyframes hg-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+      50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+    }
+    #hg-box {
+      position: fixed; bottom: 96px; right: 32px; z-index: 200;
+      width: 360px; border-radius: 20px;
+      background: ${BG}; border: 1px solid rgba(108,99,255,.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+      display: none; flex-direction: column; overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .3s;
+      transform: translateY(12px) scale(.97); opacity: 0;
+    }
+    #hg-box.open {
+      display: flex;
+      animation: hg-appear .25s cubic-bezier(.4,0,.2,1) forwards;
+    }
+    @keyframes hg-appear {
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    #hg-head {
+      background: linear-gradient(135deg, ${ACCENT}, #8b83ff);
+      padding: 16px 18px; color: #fff; display: flex;
+      align-items: center; gap: 10px;
+    }
+    #hg-head .hg-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    #hg-head .hg-title { font-weight: 800; font-size: 14px; line-height: 1.2; }
+    #hg-head .hg-status { font-size: 11px; opacity: .8; display: flex; align-items: center; gap: 5px; }
+    #hg-head .hg-status::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: #22c55e; display: inline-block;
+    }
+    #hg-close {
+      margin-left: auto; background: none; border: none;
+      color: rgba(255,255,255,.7); font-size: 18px; cursor: pointer;
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: background .2s;
+    }
+    #hg-close:hover { background: rgba(255,255,255,.15); color: #fff; }
+    #hg-msgs {
+      flex: 1; max-height: 320px; overflow-y: auto;
+      padding: 16px; display: flex; flex-direction: column; gap: 10px;
+      scroll-behavior: smooth;
+    }
+    #hg-msgs::-webkit-scrollbar { width: 4px; }
+    #hg-msgs::-webkit-scrollbar-thumb { background: rgba(108,99,255,.4); border-radius: 99px; }
+    .hg-msg {
+      max-width: 85%; padding: 10px 14px; border-radius: 14px;
+      font-size: 13.5px; line-height: 1.5; word-break: break-word;
+    }
+    .hg-msg.bot {
+      background: ${BGCARD}; color: ${TEXT};
+      align-self: flex-start; border-bottom-left-radius: 4px;
+      border: 1px solid ${BORDER};
+    }
+    .hg-msg.user {
+      background: linear-gradient(135deg, ${ACCENT}, #8b83ff);
+      color: #fff; align-self: flex-end; border-bottom-right-radius: 4px;
+    }
+    .hg-msg.typing { opacity: .6; }
+    .hg-msg a { color: #a5b4fc; text-decoration: underline; }
+    #hg-suggestions {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 16px 12px;
+    }
+    .hg-sug {
+      background: ${BGCARD}; border: 1px solid rgba(108,99,255,.3);
+      color: ${ACCENT}; font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: 99px; cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+    .hg-sug:hover { background: rgba(108,99,255,.15); border-color: ${ACCENT}; }
+    #hg-form {
+      padding: 12px 14px; border-top: 1px solid ${BORDER};
+      display: flex; gap: 8px; background: ${BGCARD};
+    }
+    #hg-input {
+      flex: 1; background: ${BG}; border: 1px solid ${BORDER};
+      border-radius: 10px; padding: 10px 14px;
+      color: ${TEXT}; font-size: 13.5px; outline: none;
+      transition: border-color .2s;
+      font-family: inherit;
+    }
+    #hg-input:focus { border-color: ${ACCENT}; }
+    #hg-input::placeholder { color: ${MUTED}; }
+    #hg-send {
+      background: linear-gradient(135deg, ${ACCENT}, #8b83ff);
+      border: none; border-radius: 10px;
+      padding: 10px 14px; color: #fff; cursor: pointer;
+      font-size: 16px; transition: opacity .15s, transform .15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #hg-send:hover { opacity: .9; transform: scale(1.05); }
+    #hg-send:disabled { opacity: .3; cursor: default; transform: none; }
+    #hg-powered {
+      text-align: center; padding: 8px;
+      font-size: 10px; color: ${MUTED};
+      background: ${BGCARD}; border-top: 1px solid ${BORDER};
+    }
+    @media (max-width: 480px) {
+      #hg-box { width: calc(100vw - 24px); right: 12px; }
+      #hg-btn { right: 72px; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* ── ESTRUCTURA HTML ─────────────────────────────────────── */
+  const btn = document.createElement('button');
+  btn.id = 'hg-btn';
+  btn.setAttribute('aria-label', 'Abrir chat con Hugo Assistant');
+  btn.innerHTML = `💬<span class="hg-notif"></span>`;
+
+  const box = document.createElement('div');
+  box.id = 'hg-box';
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-label', 'Chat con Hugo Assistant');
+  box.innerHTML = `
+    <div id="hg-head">
+      <div class="hg-avatar">🤖</div>
+      <div>
+        <div class="hg-title">Hugo Assistant</div>
+        <div class="hg-status">Disponible ahora</div>
+      </div>
+      <button id="hg-close" aria-label="Cerrar chat">✕</button>
+    </div>
+    <div id="hg-msgs" role="log" aria-live="polite">
+      <div class="hg-msg bot">¡Hola! Soy el asistente de Hugo. Puedo contarte sobre sus servicios, precios y cómo trabajar con él. ¿En qué te ayudo? 👋</div>
+    </div>
+    <div id="hg-suggestions">
+      <span class="hg-sug">¿Qué servicios ofreces?</span>
+      <span class="hg-sug">¿Cuánto cuesta una web?</span>
+      <span class="hg-sug">¿Estás disponible?</span>
+    </div>
+    <form id="hg-form" onsubmit="return false">
+      <input id="hg-input" type="text" placeholder="Escribe tu pregunta…" autocomplete="off" />
+      <button id="hg-send" type="submit" aria-label="Enviar">
+        <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </form>
+    <div id="hg-powered">⚡ Powered by Claude AI</div>
+  `;
+
+  document.body.appendChild(btn);
+  document.body.appendChild(box);
+
+  /* ── LÓGICA ──────────────────────────────────────────────── */
+  btn.addEventListener('click', toggleChat);
+  document.getElementById('hg-close').addEventListener('click', closeChat);
+
+  function toggleChat() {
+    if (box.classList.contains('open')) {
+      closeChat();
+    } else {
+      box.classList.add('open');
+      btn.innerHTML = `✕`;
+      document.getElementById('hg-input').focus();
+    }
+  }
+  function closeChat() {
+    box.classList.remove('open');
+    btn.innerHTML = `💬<span class="hg-notif"></span>`;
+  }
+
+  // Sugerencias rápidas
+  document.querySelectorAll('.hg-sug').forEach(sug => {
+    sug.addEventListener('click', () => {
+      document.getElementById('hg-input').value = sug.textContent;
+      document.getElementById('hg-suggestions').style.display = 'none';
+      sendMessage();
+    });
+  });
+
+  async function sendMessage() {
+    const input   = document.getElementById('hg-input');
+    const sendBtn = document.getElementById('hg-send');
+    const msgs    = document.getElementById('hg-msgs');
+    const text    = input.value.trim();
+    if (!text) return;
+
+    // Ocultar sugerencias al enviar el primer mensaje
+    document.getElementById('hg-suggestions').style.display = 'none';
+
+    input.value = '';
+    sendBtn.disabled = true;
+
+    // Mensaje del usuario
+    const uDiv = document.createElement('div');
+    uDiv.className = 'hg-msg user';
+    uDiv.textContent = text;
+    msgs.appendChild(uDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // Indicador "escribiendo..."
+    const bDiv = document.createElement('div');
+    bDiv.className = 'hg-msg bot typing';
+    bDiv.textContent = '…';
+    msgs.appendChild(bDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    history.push({ role: 'user', content: text });
+    if (history.length > 20) history.splice(0, 2);
+
+    try {
+      /* ── Backend FastAPI con timeout de 20s ── */
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 20000);
+
+      const res = await fetch(`${BACKEND_URL}/widget/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId, message: text }),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+
+      if (!res.ok) throw new Error('backend-error');
+      const data = await res.json();
+      const reply = data.reply;
+      bDiv.innerHTML = reply.replace(/\n/g, '<br>');
+      bDiv.classList.remove('typing');
+      history.push({ role: 'assistant', content: reply });
+
+    } catch {
+      /* ── Fallback: mensaje de contacto directo ── */
+      bDiv.innerHTML = `No puedo conectar ahora mismo. Puedes contactar directamente con Hugo:<br><br>
+        📧 <a href="mailto:hugoarribasmunoz2019@gmail.com">hugoarribasmunoz2019@gmail.com</a><br>
+        ⏱️ Responde en menos de 2 horas (L–V)`;
+      bDiv.classList.remove('typing');
+    }
+
+    sendBtn.disabled = false;
+    msgs.scrollTop = msgs.scrollHeight;
+    input.focus();
+  }
+
+  document.getElementById('hg-form').addEventListener('submit', sendMessage);
+  document.getElementById('hg-send').addEventListener('click', sendMessage);
+  document.getElementById('hg-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  // Abrir automáticamente tras 8 segundos (primera visita)
+  if (!sessionStorage.getItem('hg_opened')) {
+    setTimeout(() => {
+      if (!box.classList.contains('open')) {
+        toggleChat();
+        sessionStorage.setItem('hg_opened', '1');
+      }
+    }, 8000);
+  }
+})();
+</script>
 </body>
 </html>
