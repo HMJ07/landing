@@ -936,6 +936,92 @@
     .cta-box .section-title { margin-bottom: 16px; }
     .cta-box .section-sub { margin: 0 auto 36px; color: var(--text-muted); }
     .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ════════════════════════════════════════════════════════════
+       RESPONSIVE GLOBAL — móvil primero
+    ════════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      :root { --section-gap: 72px; }
+
+      /* Nav */
+      .nav-links { display: none; }
+      .nav-cta   { display: none; }
+      .burger    { display: flex; }
+
+      /* Hero */
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-visual { display: none; }
+      .hero-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+      .hero-stats { gap: 20px; flex-wrap: wrap; }
+      .hero-cta   { flex-direction: column; }
+      .hero-cta .btn { width: 100%; text-align: center; }
+
+      /* Secciones genéricas */
+      .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+      .section-sub   { font-size: .92rem; }
+
+      /* About */
+      .about-grid { grid-template-columns: 1fr !important; gap: 40px; }
+      .about-avatar-wrap { width: 160px; height: 160px; margin: 0 auto; }
+
+      /* Skills */
+      .skills-grid { grid-template-columns: 1fr; }
+      .soft-skills { grid-template-columns: 1fr 1fr; }
+
+      /* Portfolio */
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-filters { gap: 6px; }
+      .filter-btn { font-size: .78rem; padding: 6px 14px; }
+
+      /* Proceso */
+      .proceso-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .proceso-steps::before { display: none; }
+
+      /* Testimonios */
+      .testimonial-card { min-width: 100%; }
+
+      /* Contacto */
+      .contacto-grid { grid-template-columns: 1fr; gap: 40px; }
+
+      /* CTA section */
+      .cta-box { padding: 48px 24px; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr !important; gap: 32px; }
+      .footer-links-group { min-width: 0; }
+
+      /* Bots preview */
+      .bp-grid { grid-template-columns: 1fr !important; }
+    }
+
+    @media (max-width: 480px) {
+      /* Container padding */
+      .container { padding: 0 16px; }
+
+      /* Hero */
+      .hero-title { font-size: clamp(1.8rem, 9vw, 2.4rem); }
+      #hero { padding: 100px 0 60px; }
+
+      /* Proceso — columna única en muy pequeño */
+      .proceso-steps { grid-template-columns: 1fr; }
+
+      /* Soft skills — columna única */
+      .soft-skills { grid-template-columns: 1fr; }
+
+      /* Service cards */
+      .service-card { padding: 24px 20px; }
+
+      /* Project cards */
+      .project-card { border-radius: var(--radius); }
+
+      /* Contacto */
+      .contact-link { padding: 12px 14px; gap: 10px; }
+      .contact-link-icon { font-size: 1.2rem; }
+
+      /* Widget chat */
+      #hg-box { width: calc(100vw - 24px); right: 12px; }
+      #hg-btn { right: 72px; }
+    }
   </style>
 
   <!-- Google Fonts preconnect -->
@@ -1713,13 +1799,11 @@
               <div class="contact-link-val">hugoarribasmunoz2019@gmail.com</div>
             </div>
           </a>
-          <a href="https://linkedin.com/in/hugo-arribas" target="_blank" class="contact-link">
+          <a href="https://www.linkedin.com/in/hugo-arribas-mu%C3%B1oz-653160379/" target="_blank" class="contact-link">
             <span class="contact-link-icon">💼</span>
             <div>
               <div class="contact-link-label">LinkedIn</div>
-              <!-- ✏️ CAMBIA esta URL por tu perfil real -->
-              <div class="contact-link-val">linkedin.com/in/hugo-arribas-mu%C3%B1oz/</div>
-              <div class="badge-base LI-profile-badge" data-locale="es_ES" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="hugo-arribas-muñoz-653160379" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/hugo-arribas-mu%C3%B1oz/=profile-badge">Hugo Arribas Muñoz</a></div>
+              <div class="contact-link-val">linkedin.com/in/hugo-arribas-muñoz</div>
             </div>
           </a>
           <a href="https://github.com/HMJ07" target="_blank" class="contact-link">
@@ -1736,6 +1820,16 @@
               <div class="contact-link-label">Tiempo de respuesta</div>
               <div class="contact-link-val">Menos de 2 horas (L–V)</div>
             </div>
+          </div>
+        </div>
+
+        <!-- LinkedIn Badge Card -->
+        <div style="margin-top:28px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px;display:flex;align-items:center;gap:20px;transition:var(--transition);" onmouseover="this.style.borderColor='rgba(10,102,194,.6)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0a66c2,#0d8ecf);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.6rem;">in</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:800;font-size:1rem;color:var(--text);margin-bottom:2px;">Hugo Arribas Muñoz</div>
+            <div style="font-size:.82rem;color:var(--text-muted);margin-bottom:10px;">Desarrollador Full Stack & AI Automation · España</div>
+            <a href="https://www.linkedin.com/in/hugo-arribas-mu%C3%B1oz-653160379/" target="_blank" rel="noopener" style="display:inline-block;padding:7px 18px;background:#0a66c2;color:#fff;border-radius:6px;font-size:.8rem;font-weight:700;text-decoration:none;transition:.2s;" onmouseover="this.style.background='#0d8ecf'" onmouseout="this.style.background='#0a66c2'">Ver perfil →</a>
           </div>
         </div>
       </div>
