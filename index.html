@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
@@ -1154,7 +1154,7 @@
         <div class="service-price">Desde <strong>€149</strong> / proyecto</div>
       </div>
 
-      <div class="service-card reveal d4">
+      <div class="service-card reveal d4" style="border-color:rgba(108,99,255,.4);cursor:pointer;" onclick="document.getElementById('bots-preview').scrollIntoView({behavior:'smooth'})">
         <div class="service-icon">🤝</div>
         <div class="service-name">Bots y Asistentes Virtuales</div>
         <p class="service-desc">
@@ -1168,6 +1168,12 @@
           <span class="tag">FastAPI</span>
         </div>
         <div class="service-price">Desde <strong>€199</strong> / proyecto</div>
+        <div style="margin-top:16px;">
+          <span style="font-size:.8rem;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:6px;">
+            <span style="width:7px;height:7px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse-green 2s infinite;"></span>
+            Ver demo en vivo →
+          </span>
+        </div>
       </div>
       
       <div class="service-card reveal d5">
@@ -1187,6 +1193,220 @@
     </div>
   </div>
 </section>
+
+<!-- ════════════════════════════════════════════════════════════
+     BOTS PREVIEW
+═════════════════════════════════════════════════════════════ -->
+<section id="bots-preview" style="padding:80px 0;background:linear-gradient(180deg,var(--bg) 0%,rgba(108,99,255,.04) 50%,var(--bg) 100%);">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:56px;">
+      <p class="section-label">Demo en vivo</p>
+      <h2 class="section-title">Asistentes <span class="gradient-text">inteligentes</span></h2>
+      <p class="section-sub">Elige la plataforma y ve cómo tu asistente responde en tiempo real.</p>
+    </div>
+
+    <!-- TAB BUTTONS -->
+    <div id="bp-tabs" style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:40px;">
+      <button class="bp-tab active" data-tab="web"
+        style="padding:10px 24px;border-radius:50px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-weight:700;cursor:pointer;font-size:.9rem;transition:var(--transition);">
+        🌐 Web Widget
+      </button>
+      <button class="bp-tab" data-tab="telegram"
+        style="padding:10px 24px;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--text-muted);font-weight:600;cursor:pointer;font-size:.9rem;transition:var(--transition);">
+        ✈️ Telegram
+      </button>
+      <button class="bp-tab" data-tab="whatsapp"
+        style="padding:10px 24px;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--text-muted);font-weight:600;cursor:pointer;font-size:.9rem;transition:var(--transition);">
+        💬 WhatsApp
+      </button>
+      <button class="bp-tab" data-tab="discord"
+        style="padding:10px 24px;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--text-muted);font-weight:600;cursor:pointer;font-size:.9rem;transition:var(--transition);">
+        🎮 Discord
+      </button>
+    </div>
+
+    <!-- PANELS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;max-width:960px;margin:0 auto;" class="bp-grid">
+
+      <!-- LEFT: description -->
+      <div id="bp-desc" style="display:flex;flex-direction:column;gap:20px;">
+        <!-- filled by JS -->
+      </div>
+
+      <!-- RIGHT: mockup -->
+      <div id="bp-mockup" style="position:relative;">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="reveal" style="text-align:center;margin-top:56px;">
+      <a href="#contacto" style="display:inline-block;padding:14px 40px;background:var(--accent);color:#fff;border-radius:50px;font-weight:700;text-decoration:none;font-size:1rem;transition:var(--transition);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(108,99,255,.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        Quiero mi asistente →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+@media(max-width:720px){
+  .bp-grid{grid-template-columns:1fr !important;}
+}
+.bp-bubble{animation:bubbleFade .4s ease both;}
+@keyframes bubbleFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+</style>
+
+<script>
+(function(){
+  const PLATFORMS = {
+    web: {
+      color: '#6c63ff',
+      title: 'Widget Web',
+      emoji: '🌐',
+      desc: 'Un chat flotante que puedes integrar en cualquier web con una sola línea de código. Responde preguntas, gestiona leads y ofrece soporte 24/7.',
+      features: ['Instalación en 2 minutos','Diseño personalizable','Historial de conversación','Soporte multiidioma'],
+      headerBg: '#6c63ff',
+      headerText: 'Hugo Assistant',
+      bubbleStyle: function(role){ return role==='user' ? 'background:#6c63ff;color:#fff;align-self:flex-end;' : 'background:rgba(255,255,255,.07);color:var(--text);'; },
+      messages: [
+        {role:'bot', text:'👋 Hola! Soy el asistente de Hugo Arribas. ¿En qué te puedo ayudar?'},
+        {role:'user', text:'¿Qué servicios ofrece Hugo?'},
+        {role:'bot', text:'Hugo ofrece desarrollo web, automatizaciones con IA, bots para Telegram, WhatsApp y Discord, y mucho más. ¿Te interesa alguno en concreto?'},
+        {role:'user', text:'Me interesa una landing page.'},
+        {role:'bot', text:'Perfecto! Puedo pedirle que te prepare un presupuesto personalizado. ¿Me dejas tu email? 📧'},
+      ]
+    },
+    telegram: {
+      color: '#229ED9',
+      title: 'Bot de Telegram',
+      emoji: '✈️',
+      desc: 'Tu negocio disponible en Telegram. Los usuarios pueden hacer consultas, recibir notificaciones y completar flujos directamente desde la app que ya usan.',
+      features: ['Comandos personalizados','Notificaciones push','Flujos conversacionales','0 instalaciones para el usuario'],
+      headerBg: '#229ED9',
+      headerText: '@HugoAssistantBot',
+      bubbleStyle: function(role){ return role==='user' ? 'background:#229ED9;color:#fff;align-self:flex-end;' : 'background:rgba(255,255,255,.07);color:var(--text);'; },
+      messages: [
+        {role:'bot', text:'👋 Bienvenido al bot de Hugo Arribas. Escribe /ayuda para ver lo que puedo hacer.'},
+        {role:'user', text:'/ayuda'},
+        {role:'bot', text:'Puedo ayudarte con:\n• /presupuesto — solicitar presupuesto\n• /servicios — ver catálogo\n• /contacto — hablar con Hugo'},
+        {role:'user', text:'/presupuesto'},
+        {role:'bot', text:'Cuéntame qué necesitas y te preparo una propuesta en menos de 24 horas ⚡'},
+      ]
+    },
+    whatsapp: {
+      color: '#25D366',
+      title: 'Bot de WhatsApp',
+      emoji: '💬',
+      desc: 'Automatiza la atención al cliente en el canal de mensajería más popular de España. Respuestas instantáneas, menús interactivos y seguimiento de pedidos.',
+      features: ['Menús interactivos','Respuesta en segundos','Integración con CRM','Plantillas aprobadas por Meta'],
+      headerBg: '#075E54',
+      headerText: 'Hugo Arribas — Dev',
+      bubbleStyle: function(role){ return role==='user' ? 'background:#dcf8c6;color:#111;align-self:flex-end;' : 'background:rgba(255,255,255,.1);color:var(--text);'; },
+      messages: [
+        {role:'bot', text:'¡Hola! 👋 Soy el asistente de Hugo Arribas. ¿Cómo te puedo ayudar hoy?'},
+        {role:'user', text:'Hola! Quiero una tienda online.'},
+        {role:'bot', text:'Genial! Te puedo contar más sobre eso. ¿Tu tienda ya existe o la estamos creando desde cero?'},
+        {role:'user', text:'Desde cero, quiero vender ropa.'},
+        {role:'bot', text:'Perfecto. Una tienda con catálogo, carrito y pagos con Stripe puede estar lista en 2 semanas. ¿Te envío el presupuesto? 📋'},
+      ]
+    },
+    discord: {
+      color: '#5865F2',
+      title: 'Bot de Discord',
+      emoji: '🎮',
+      desc: 'Gestiona tu comunidad en Discord con un bot que responde preguntas, modera contenido, da la bienvenida a nuevos miembros y mucho más.',
+      features: ['Slash commands','Moderación automática','Roles automáticos','Integración con APIs externas'],
+      headerBg: '#5865F2',
+      headerText: '#soporte — Tu Servidor',
+      bubbleStyle: function(role){ return role==='user' ? 'background:#5865F2;color:#fff;align-self:flex-end;' : 'background:rgba(255,255,255,.07);color:var(--text);'; },
+      messages: [
+        {role:'bot', text:'🤖 HugoBot está online. ¡Escribe /ayuda para empezar!'},
+        {role:'user', text:'/ayuda'},
+        {role:'bot', text:'Comandos disponibles:\n• /info — información del servidor\n• /faq — preguntas frecuentes\n• /ticket — abrir soporte privado'},
+        {role:'user', text:'/ticket Tengo una duda sobre el plan premium'},
+        {role:'bot', text:'✅ Ticket #42 creado. Hugo te responderá en menos de 2 horas. ¡Gracias por tu paciencia!'},
+      ]
+    }
+  };
+
+  let currentTab = 'web';
+  let animTimer = null;
+
+  function renderDesc(p){
+    const pl = PLATFORMS[p];
+    document.getElementById('bp-desc').innerHTML =
+      '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;">' +
+        '<div style="font-size:2.5rem;margin-bottom:12px;">'+pl.emoji+'</div>' +
+        '<h3 style="font-size:1.4rem;font-weight:800;margin-bottom:12px;color:var(--text);">'+pl.title+'</h3>' +
+        '<p style="color:var(--text-muted);line-height:1.7;margin-bottom:24px;">'+pl.desc+'</p>' +
+        '<ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">' +
+          pl.features.map(function(f){ return '<li style="display:flex;align-items:center;gap:10px;color:var(--text);font-size:.9rem;"><span style="color:'+pl.color+';">✓</span>'+f+'</li>'; }).join('') +
+        '</ul>' +
+      '</div>';
+  }
+
+  function buildMockup(p){
+    const pl = PLATFORMS[p];
+    return '<div style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.08);">' +
+      '<div style="background:'+pl.headerBg+';padding:14px 18px;display:flex;align-items:center;gap:10px;">' +
+        '<div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;">🤖</div>' +
+        '<div><div style="font-weight:700;color:#fff;font-size:.9rem;">'+pl.headerText+'</div><div style="font-size:.7rem;color:rgba(255,255,255,.7);">● En línea</div></div>' +
+      '</div>' +
+      '<div id="bp-chat" style="background:#0d0d14;min-height:240px;max-height:320px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;">' +
+      '</div>' +
+      '<div style="background:#111118;padding:12px 16px;display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.06);">' +
+        '<div style="flex:1;background:rgba(255,255,255,.06);border-radius:20px;padding:10px 16px;font-size:.85rem;color:var(--text-muted);">Escribe un mensaje...</div>' +
+        '<div style="width:36px;height:36px;background:'+pl.color+';border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;">➤</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function addBubble(role, text, color){
+    const chat = document.getElementById('bp-chat');
+    if(!chat) return;
+    const bubble = document.createElement('div');
+    bubble.className = 'bp-bubble';
+    bubble.style.cssText = 'max-width:80%;padding:10px 14px;border-radius:16px;font-size:.85rem;line-height:1.5;white-space:pre-line;' + PLATFORMS[currentTab].bubbleStyle(role);
+    bubble.textContent = text;
+    chat.appendChild(bubble);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function animateMessages(tab){
+    if(animTimer) clearTimeout(animTimer);
+    const msgs = PLATFORMS[tab].messages;
+    let i = 0;
+    function next(){
+      if(i >= msgs.length || currentTab !== tab) return;
+      addBubble(msgs[i].role, msgs[i].text);
+      i++;
+      animTimer = setTimeout(next, 950);
+    }
+    animTimer = setTimeout(next, 300);
+  }
+
+  function switchTab(tab){
+    currentTab = tab;
+    // update tab styles
+    document.querySelectorAll('.bp-tab').forEach(function(btn){
+      var isActive = btn.dataset.tab === tab;
+      btn.style.background = isActive ? PLATFORMS[tab].color : 'transparent';
+      btn.style.borderColor = isActive ? PLATFORMS[tab].color : 'rgba(255,255,255,.08)';
+      btn.style.color = isActive ? '#fff' : 'var(--text-muted)';
+    });
+    renderDesc(tab);
+    document.getElementById('bp-mockup').innerHTML = buildMockup(tab);
+    animateMessages(tab);
+  }
+
+  document.querySelectorAll('.bp-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){ switchTab(btn.dataset.tab); });
+  });
+
+  // init
+  switchTab('web');
+})();
+</script>
 
 <!-- ════════════════════════════════════════════════════════════
      PROCESO
@@ -1922,7 +2142,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
      En producción: BACKEND_URL = 'https://TU-DOMINIO.com'
      En local:      BACKEND_URL = 'http://localhost:8000'
   ──────────────────────────────────────────────────────────── */
-  const BACKEND_URL = 'https://hugo-bot-backend.onrender.com';
+  const BACKEND_URL = 'http://localhost:8000';
 
   const ACCENT  = '#6c63ff';   // ← mismo que --accent del site
   const BG      = '#0a0a0f';
